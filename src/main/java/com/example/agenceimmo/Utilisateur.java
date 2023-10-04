@@ -1,5 +1,8 @@
 package com.example.agenceimmo;
 
+/**
+ * Classe utilisateur
+ */
 public class Utilisateur {
     private int id;
     private String mdp;
