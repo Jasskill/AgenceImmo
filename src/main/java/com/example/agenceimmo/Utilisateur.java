@@ -1,7 +1,8 @@
 package com.example.agenceimmo;
 
 /**
- * Classe utilisateur créée le 4/10/2023
+ * Classe utilisateur
+ * créée le 4/10/2023
  */
 public class Utilisateur {
     private int id;
