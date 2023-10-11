@@ -5,6 +5,7 @@ public class Logement {
     private String rue;
     private String codePostale;
     private String ville;
+    private String description;
 
 
     public int getId(){
@@ -35,11 +36,14 @@ public class Logement {
     public void setVille(String ville) {
         this.ville = ville;
     }
+    public void setDescription(String description){ this.description = description; }
+    public String getDescription(){ return description; }
 
-    public Logement(int unId, String uneRue, String unCodePostale, String uneVille){
+    public Logement(int unId, String uneRue, String unCodePostale, String uneVille,String uneDescription ){
         this.id = unId;
         this.rue = uneRue;
         this.codePostale = unCodePostale;
         this.ville = uneVille;
+        this.description = uneDescription;
     }
 }
