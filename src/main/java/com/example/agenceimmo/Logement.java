@@ -46,4 +46,12 @@ public class Logement {
         this.ville = uneVille;
         this.description = uneDescription;
     }
+
+    public String toString(){
+        String leLogement = "";
+
+        leLogement = this.id + "\t ; " + this.rue + "\t ; " + this.ville + "\t ; " + this.codePostale + "\t ; " + this.description;
+
+        return leLogement;
+    }
 }
