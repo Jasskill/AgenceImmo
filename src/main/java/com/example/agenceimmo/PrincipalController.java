@@ -67,7 +67,7 @@ public class PrincipalController {
         try{
             Connection coBaseImmobilier = DriverManager.getConnection("jdbc:mysql://172.19.0.103/Immobilier", "dev", "0550002D");
             Statement stmt = coBaseImmobilier.createStatement();
-            String requete = "SELECT id, rue, codePostal, ville FROM Logement ORDER BY id ASC";
+            String requete = "SELECT id, rue, codePostal, ville, description FROM Logement ORDER BY id ASC";
             ResultSet res = stmt.executeQuery(requete);
             while (res.next())
             {
@@ -76,7 +76,8 @@ public class PrincipalController {
                 String rue = res.getString("logement.rue");
                 String codePostal = res.getString("logement.codePostal");
                 String ville = res.getString("logement.ville");
-                Logement unLogement = new Logement(id, rue, codePostal, ville);
+                String description = res.getString("logement.description");
+                Logement unLogement = new Logement(id, rue, codePostal, ville, description);
                 lesLogements.add(unLogement);
             }
 
