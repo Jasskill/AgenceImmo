@@ -48,7 +48,7 @@ public class PrincipalController {
     @FXML
     protected void onBoutonAjouterClick() throws IOException {
         Stage newWindow = new Stage();
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("ajout.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(AgenceImmo.class.getResource("ajout.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1280, 720);
         newWindow.setScene(scene);
         // Specifies the modality for new window.
