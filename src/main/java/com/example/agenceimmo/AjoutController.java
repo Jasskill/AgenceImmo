@@ -26,6 +26,7 @@ public class AjoutController {
     }
 
 
-
-
+    public void onSelectNbPieces() {
+        // à écrire
+    }
 }
