@@ -7,6 +7,11 @@ import javafx.stage.Stage;
 import javafx.scene.control.Label;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.FileSystem;
+import com.jcraft.jsch.*;
+import org.apache.commons.vfs2.*;
+import org.apache.commons.vfs2.provider.sftp.SftpFileSystemConfigBuilder;
+
 public class AjoutController {
     @FXML
     private Label msgajoutphoto;
@@ -22,6 +27,37 @@ public class AjoutController {
             msgajoutphoto.setVisible(true);
         } else {
             msgajoutphoto.setVisible(false);
+        }
+        if(file != null){
+            String fileAsString = file.toString();
+            System.out.println("On va uploader : " + fileAsString);
+            FileSystemManager manager = null;
+            try{
+                manager = VFS.getManager();
+
+                FileSystemOptions fsOptions = new FileSystemOptions();
+                SftpFileSystemConfigBuilder.getInstance().setStrictHostKeyChecking(fsOptions, "no");
+                SftpFileSystemConfigBuilder.getInstance().setUserDirIsRoot(fsOptions, false);
+                SftpFileSystemConfigBuilder.getInstance().setTimeout(fsOptions, 10000);
+                FileSystemManager fsManager = VFS.getManager();
+                // découpe du fichier
+
+                String uri = "sftp://agenceimmo:0550002D@172.19.0.44:port/var/www/html/uploads/"+file.getName();
+
+                FileObject fo = fsManager.resolveFile(uri, fsOptions);
+                FileObject local = manager.resolveFile(fileAsString);
+
+                fo.copyFrom(local, new AllFileSelector());
+
+                fo.close();
+                local.close();
+
+            }catch(Exception e){
+                System.out.println(e.getMessage());
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("On va rien faire, comme tu veux !");
         }
     }
 

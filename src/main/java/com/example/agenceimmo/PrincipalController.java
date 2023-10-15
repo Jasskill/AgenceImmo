@@ -52,7 +52,7 @@ public class PrincipalController {
     protected void onBoutonAjouterClick() throws IOException {
         Stage newWindow = new Stage();
         FXMLLoader fxmlLoader = new FXMLLoader(AgenceImmo.class.getResource("ajout.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 1280, 720);
+        Scene scene = new Scene(fxmlLoader.load(), 640, 720);
         newWindow.setScene(scene);
         // Specifies the modality for new window.
         newWindow.initModality(Modality.APPLICATION_MODAL);
