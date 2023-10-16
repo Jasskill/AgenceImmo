@@ -8,6 +8,11 @@ import javafx.scene.control.Label;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileSystem;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 import com.jcraft.jsch.*;
 import org.apache.commons.vfs2.*;
 import org.apache.commons.vfs2.provider.sftp.SftpFileSystemConfigBuilder;
@@ -42,7 +47,7 @@ public class AjoutController {
                 FileSystemManager fsManager = VFS.getManager();
                 // découpe du fichier
 
-                String uri = "sftp://agenceimmo:0550002D@172.19.0.44:port/var/www/html/uploads/"+file.getName();
+                String uri = "sftp://agenceimmo:0550002D@172.19.0.44/var/www/html/uploads/"+file.getName();
 
                 FileObject fo = fsManager.resolveFile(uri, fsOptions);
                 FileObject local = manager.resolveFile(fileAsString);
@@ -53,6 +58,16 @@ public class AjoutController {
                 local.close();
 
             }catch(Exception e){
+                System.out.println(e.getMessage());
+                e.printStackTrace();
+            }
+
+            try{
+                Connection co = DriverManager.getConnection("jdbc:mysql://172.19.0.103/Immobilier", "dev", "0550002D");
+                Statement stmt = co.createStatement();
+                String requete = "INSERT INTO Photo ()";
+                // à finir
+            } catch (SQLException e) {
                 System.out.println(e.getMessage());
                 e.printStackTrace();
             }
