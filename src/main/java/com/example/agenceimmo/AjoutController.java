@@ -3,6 +3,8 @@ package com.example.agenceimmo;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.scene.control.Label;
@@ -78,32 +80,22 @@ public class AjoutController {
             System.out.println("On va rien faire, comme tu veux !");
         }
     }
-
-
+    @FXML
+    private ComboBox<String> combonbpieces;
+    @FXML
+    private VBox piecesContainer;
     public void onSelectNbPieces() {
         // Récupérer le nombre de pièces sélectionné
         int nombreDePieces = Integer.parseInt(combonbpieces.getValue());
-
-
+        // Sinon c le bordel et j'en génère 1500000
+        piecesContainer.getChildren().clear();
 
         for (int i = 1; i <= nombreDePieces; i++) {
             Label labelTypePiece = new Label("TYPE DE PIECE " + i);
-            labelTypePiece.setLayoutX(124.0);
-            labelTypePiece.setLayoutY(397.0 + 30 * i); // Ajustez la position en conséquence
-
             ComboBox<String> selectTypePiece = new ComboBox<>();
-            selectTypePiece.setLayoutX(123.0);
-            selectTypePiece.setLayoutY(414.0 + 30 * i); // Ajustez la position en conséquence
-
             Label labelSurfacePiece = new Label("SURFACE DE LA PIECE " + i);
-            labelSurfacePiece.setLayoutX(316.0);
-            labelSurfacePiece.setLayoutY(396.0 + 30 * i); // Ajustez la position en conséquence
-
             TextField surfacePiece = new TextField();
-            surfacePiece.setLayoutX(314.0);
-            surfacePiece.setLayoutY(414.0 + 30 * i); // Ajustez la position en conséquence
-
-            container.getChildren().addAll(labelTypePiece, selectTypePiece, labelSurfacePiece, surfacePiece);
+            piecesContainer.getChildren().addAll(labelTypePiece, selectTypePiece, labelSurfacePiece, surfacePiece);
         }
     }
 }

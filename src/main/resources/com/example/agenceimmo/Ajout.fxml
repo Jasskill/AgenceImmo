@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.collections.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<?import javafx.collections.FXCollections?>
-<?import java.lang.String?>
 <AnchorPane prefHeight="690.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.agenceimmo.AjoutController">
    <children>
       <Button fx:id="boutonaccueil" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Accueil" />
@@ -46,11 +46,10 @@
          </items>
       </ComboBox>
 
+      <ScrollPane  layoutX="73.0" layoutY="395.0" prefHeight="86.0" prefWidth="432.0">
+      <VBox fx:id="piecesContainer" spacing="10"/>
+      </ScrollPane>
 
-      <Label layoutX="124.0" layoutY="397.0" prefHeight="17.0" prefWidth="150.0" text="TYPE DE PIECE" />
-      <ComboBox fx:id="selecttypepieces" layoutX="123.0" layoutY="414.0" prefWidth="150.0" />
-      <Label layoutX="316.0" layoutY="396.0" text="SURFACE DE LA PIECE" />
-      <TextField fx:id="surfacepiece" layoutX="314.0" layoutY="414.0" />
 
       <!-- Ajout d'un nouvel équipement -->
       <Label layoutX="153.0" layoutY="483.0" text="AJOUT D'UN NOUVEL EQUIPEMENT DANS LA PIECE" />
