@@ -5,7 +5,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="690.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.agenceimmo.AjoutController">
+<AnchorPane prefHeight="690.0" prefWidth="600.0" style="-fx-background-color: #DDD0C8;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.agenceimmo.AjoutController">
    <children>
       <Button fx:id="boutonaccueil" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Accueil" />
       <!-- Mes Labels ADRESSES -->
@@ -46,17 +46,9 @@
          </items>
       </ComboBox>
 
-      <ScrollPane  layoutX="73.0" layoutY="395.0" prefHeight="86.0" prefWidth="432.0">
-      <VBox fx:id="piecesContainer" spacing="10"/>
+      <ScrollPane layoutX="42.0" layoutY="395.0" prefHeight="261.0" prefWidth="517.0">
+      <VBox fx:id="piecesContainer" spacing="10" />
       </ScrollPane>
 
-
-      <!-- Ajout d'un nouvel équipement -->
-      <Label layoutX="153.0" layoutY="483.0" text="AJOUT D'UN NOUVEL EQUIPEMENT DANS LA PIECE" />
-      <Label layoutX="23.0" layoutY="518.0" prefHeight="17.0" prefWidth="284.0" text="NOMBRE D'EQUIPEMENT DANS LA PIECE" />
-      <ComboBox fx:id="selectnbequipements" layoutX="26.0" layoutY="535.0" prefWidth="150.0" />
-      <Label layoutX="27.0" layoutY="574.0" text="TYPE D'EQUIPEMENT" />
-      <TextField fx:id="typeequipements" layoutX="26.0" layoutY="591.0" prefHeight="25.0" prefWidth="182.0" />
-      <Button fx:id="ajoutesaisie" layoutX="520.0" layoutY="648.0" mnemonicParsing="false" text="AJOUTER" />
    </children>
 </AnchorPane>

@@ -84,6 +84,8 @@ public class AjoutController {
     private ComboBox<String> combonbpieces;
     @FXML
     private VBox piecesContainer;
+    @FXML
+    private ComboBox<String> selectTypePiece;
     public void onSelectNbPieces() {
         // Récupérer le nombre de pièces sélectionné
         int nombreDePieces = Integer.parseInt(combonbpieces.getValue());
@@ -91,11 +93,14 @@ public class AjoutController {
         piecesContainer.getChildren().clear();
 
         for (int i = 1; i <= nombreDePieces; i++) {
-            Label labelTypePiece = new Label("TYPE DE PIECE " + i);
-            ComboBox<String> selectTypePiece = new ComboBox<>();
-            Label labelSurfacePiece = new Label("SURFACE DE LA PIECE " + i);
+            Label labelTypePiece = new Label("TYPE DE PIECE : " + i);
+            selectTypePiece = new ComboBox<>();
+            selectTypePiece.getItems().addAll("Salon","Salle-de-bain","Chambre","Garage","Cuisine");
+            Label labelSurfacePiece = new Label("SURFACE DE LA PIECE : " + i);
             TextField surfacePiece = new TextField();
-            piecesContainer.getChildren().addAll(labelTypePiece, selectTypePiece, labelSurfacePiece, surfacePiece);
+            Label labelEquipementPiece = new Label("EQUIPEMENT DE LA PIECE : " + i);
+            TextField equipementPiece = new TextField();
+            piecesContainer.getChildren().addAll(labelTypePiece, selectTypePiece, labelSurfacePiece, surfacePiece, labelEquipementPiece,equipementPiece);
         }
     }
 }
