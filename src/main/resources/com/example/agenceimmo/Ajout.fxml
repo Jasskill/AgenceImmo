@@ -3,6 +3,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
 <AnchorPane prefHeight="690.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.agenceimmo.AjoutController">
    <children>
       <Button fx:id="boutonaccueil" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Accueil" />
@@ -27,7 +29,24 @@
       <!-- Ajout d'une nouvelle pièce -->
       <Label layoutX="208.0" layoutY="314.0" text="AJOUT D'UNE NOUVELLE PIECE" />
       <Label layoutX="226.0" layoutY="342.0" text="NOMBRE DE PIECE" />
-      <ComboBox fx:id="combonbpieces" onAction="#onSelectNbPieces" layoutX="218.0" layoutY="360.0" prefWidth="150.0" />
+      <ComboBox fx:id="combonbpieces" layoutX="218.0" layoutY="360.0" onAction="#onSelectNbPieces" prefWidth="150.0" promptText="Choisir un nombre de pièces">
+         <items>
+            <FXCollections fx:factory="observableArrayList">
+               <String fx:value="1" />
+               <String fx:value="2" />
+               <String fx:value="3" />
+               <String fx:value="4" />
+               <String fx:value="5" />
+               <String fx:value="6" />
+               <String fx:value="7" />
+               <String fx:value="8" />
+               <String fx:value="9" />
+               <String fx:value="10" />
+            </FXCollections>
+         </items>
+      </ComboBox>
+
+
       <Label layoutX="124.0" layoutY="397.0" prefHeight="17.0" prefWidth="150.0" text="TYPE DE PIECE" />
       <ComboBox fx:id="selecttypepieces" layoutX="123.0" layoutY="414.0" prefWidth="150.0" />
       <Label layoutX="316.0" layoutY="396.0" text="SURFACE DE LA PIECE" />
