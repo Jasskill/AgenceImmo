@@ -83,15 +83,6 @@ public class AjoutController {
             System.out.println("On va rien faire, comme tu veux !");
         }
     }
-    private void updateUI(int choixuti, int i) {
-
-        for (int j = 1; j <= choixuti; j++) {
-            Label labelNomEquip = new Label("NOM DE LEQUIPEMENT n° " + j + " DE LA PIECE : " + i);
-            TextField nomEquip = new TextField();
-            piecesContainer.getChildren().addAll(labelNomEquip, nomEquip);
-        }
-    }
-
     @FXML
     private ComboBox<String> combonbpieces;
     @FXML
@@ -131,4 +122,13 @@ public class AjoutController {
             });
         }
     }
+    private void updateUI(int choixuti, int i) {
+
+        for (int j = 1; j <= choixuti; j++) {
+            Label labelNomEquip = new Label("NOM DE LEQUIPEMENT n° " + j + " DE LA PIECE : " + i);
+            TextField nomEquip = new TextField();
+            piecesContainer.getChildren().addAll(labelNomEquip, nomEquip);
+        }
+    }
+
 }
