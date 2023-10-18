@@ -1,9 +1,12 @@
 package com.example.agenceimmo;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -80,12 +83,24 @@ public class AjoutController {
             System.out.println("On va rien faire, comme tu veux !");
         }
     }
+    private void updateUI(int choixuti, int i) {
+
+        for (int j = 1; j <= choixuti; j++) {
+            Label labelNomEquip = new Label("NOM DE LEQUIPEMENT n° " + j + " DE LA PIECE : " + i);
+            TextField nomEquip = new TextField();
+            piecesContainer.getChildren().addAll(labelNomEquip, nomEquip);
+        }
+    }
+
     @FXML
     private ComboBox<String> combonbpieces;
     @FXML
     private VBox piecesContainer;
     @FXML
     private ComboBox<String> selectTypePiece;
+    @FXML
+    private ComboBox<Integer> selectnbequipements;
+    public int choixuti;
     public void onSelectNbPieces() {
         // Récupérer le nombre de pièces sélectionné
         int nombreDePieces = Integer.parseInt(combonbpieces.getValue());
@@ -93,14 +108,27 @@ public class AjoutController {
         piecesContainer.getChildren().clear();
 
         for (int i = 1; i <= nombreDePieces; i++) {
+            int finalI = i;
             Label labelTypePiece = new Label("TYPE DE PIECE : " + i);
             selectTypePiece = new ComboBox<>();
             selectTypePiece.getItems().addAll("Salon","Salle-de-bain","Chambre","Garage","Cuisine");
+
             Label labelSurfacePiece = new Label("SURFACE DE LA PIECE : " + i);
             TextField surfacePiece = new TextField();
+
             Label labelEquipementPiece = new Label("EQUIPEMENT DE LA PIECE : " + i);
             TextField equipementPiece = new TextField();
-            piecesContainer.getChildren().addAll(labelTypePiece, selectTypePiece, labelSurfacePiece, surfacePiece, labelEquipementPiece,equipementPiece);
+
+            Label labelNbEquipement = new Label("Sélectionner nombre équipement de la pièce");
+            ObservableList<Integer> equipementOptions = FXCollections.observableArrayList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+            selectnbequipements = new ComboBox<>(equipementOptions);
+            ComboBox<Integer> nombreEquipements = selectnbequipements;
+            piecesContainer.getChildren().addAll(labelTypePiece,selectTypePiece,labelSurfacePiece,surfacePiece,labelEquipementPiece,equipementPiece,labelNbEquipement,selectnbequipements);
+            selectnbequipements.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
+                choixuti = newValue;
+                System.out.println("Nouvelle valeur de choixuti : " + choixuti);
+                updateUI(choixuti, finalI); // Mettez à jour l'UI en fonction de la nouvelle valeur de choixuti
+            });
         }
     }
 }
