@@ -1,11 +1,19 @@
 package com.example.agenceimmo;
 
+import java.util.ArrayList;
+
 public class Logement {
     private int id;
     private String rue;
     private String codePostale;
     private String ville;
     private String description;
+
+    private ArrayList<Piece> lesPieces;
+
+    private int nbPiece;
+
+    private ArrayList<Photo> lesPhotos;
 
 
     public int getId(){
@@ -45,6 +53,8 @@ public class Logement {
         this.codePostale = unCodePostale;
         this.ville = uneVille;
         this.description = uneDescription;
+        this.lesPhotos = new ArrayList<Photo>();
+        this.lesPieces = new ArrayList<Piece>();
     }
 
     public String toString(){
@@ -53,5 +63,38 @@ public class Logement {
         leLogement = this.id + "\t ; " + this.rue + "\t ; " + this.ville + "\t ; " + this.codePostale + "\t ; " + this.description;
 
         return leLogement;
+    }
+
+    public ArrayList<Photo> getLesPhotos() {
+        return lesPhotos;
+    }
+
+    public void setLesPhotos(ArrayList<Photo> lesPhotos) {
+        this.lesPhotos = lesPhotos;
+    }
+
+    public void ajouterPhoto(Photo p){
+        this.lesPhotos.add(p);
+    }
+
+    public int getNbPiece() {
+        return nbPiece;
+    }
+
+    public void setNbPiece(int nbPiece) {
+        this.nbPiece = nbPiece;
+    }
+
+    public ArrayList<Piece> getLesPieces() {
+        return lesPieces;
+    }
+
+    public void setLesPieces(ArrayList<Piece> lesPieces) {
+        this.lesPieces = lesPieces;
+    }
+
+    public void ajouterPiece(Piece p){
+        this.lesPieces.add(p);
+        this.nbPiece = lesPieces.size();
     }
 }
