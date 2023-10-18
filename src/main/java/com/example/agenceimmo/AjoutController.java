@@ -95,14 +95,17 @@ public class AjoutController {
     public void onSelectNbPieces() {
         // Récupérer le nombre de pièces sélectionné
         int nombreDePieces = Integer.parseInt(combonbpieces.getValue());
-        // Sinon c le bordel et j'en génère 1500000
+        // Sinon c'est le bazar et j'en génère 1500000
         piecesContainer.getChildren().clear();
 
         for (int i = 1; i <= nombreDePieces; i++) {
             int finalI = i;
+            //CREER UN NV CONTENEUR POUR LES PIECES
+            VBox pieceContainer = new VBox();
+
             Label labelTypePiece = new Label("TYPE DE PIECE : " + i);
-            selectTypePiece = new ComboBox<>();
-            selectTypePiece.getItems().addAll("Salon","Salle-de-bain","Chambre","Garage","Cuisine");
+            ComboBox<String> selectTypePiece = new ComboBox<>();
+            selectTypePiece.getItems().addAll("Salon", "Salle-de-bain", "Chambre", "Garage", "Cuisine");
 
             Label labelSurfacePiece = new Label("SURFACE DE LA PIECE : " + i);
             TextField surfacePiece = new TextField();
@@ -112,21 +115,25 @@ public class AjoutController {
 
             Label labelNbEquipement = new Label("Sélectionner nombre équipement de la pièce");
             ObservableList<Integer> equipementOptions = FXCollections.observableArrayList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
-            selectnbequipements = new ComboBox<>(equipementOptions);
-            ComboBox<Integer> nombreEquipements = selectnbequipements;
+            ComboBox<Integer> selectnbequipements = new ComboBox<>(equipementOptions);
 
-            piecesContainer.getChildren().addAll(labelTypePiece,selectTypePiece,labelSurfacePiece,surfacePiece,labelEquipementPiece,equipementPiece,labelNbEquipement,selectnbequipements);
             selectnbequipements.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
                 choixuti = newValue;
                 System.out.println("Nouvelle valeur de choixuti : " + choixuti);
                 for (int j = 1; j <= choixuti; j++) {
-                    Label labelNomEquip = new Label("NOM DE LEQUIPEMENT n° " + j + " DE LA PIECE : " + finalI);
+                    Label labelNomEquip = new Label("NOM DE L'EQUIPEMENT n° " + j + " DE LA PIECE : " + finalI);
                     TextField nomEquip = new TextField();
-                    piecesContainer.getChildren().addAll(labelNomEquip, nomEquip);
+                    pieceContainer.getChildren().addAll(labelNomEquip, nomEquip);
                 }
             });
+
+            // Ajoutez tous les éléments de la pièce au conteneur de la pièce
+            pieceContainer.getChildren().addAll(labelTypePiece, selectTypePiece, labelSurfacePiece, surfacePiece, labelEquipementPiece, equipementPiece, labelNbEquipement, selectnbequipements);
+            // Ajoutez le conteneur de la pièce à piecesContainer
+            piecesContainer.getChildren().add(pieceContainer);
         }
     }
+
 
 
 }
