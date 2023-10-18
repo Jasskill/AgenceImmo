@@ -114,21 +114,19 @@ public class AjoutController {
             ObservableList<Integer> equipementOptions = FXCollections.observableArrayList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
             selectnbequipements = new ComboBox<>(equipementOptions);
             ComboBox<Integer> nombreEquipements = selectnbequipements;
+
             piecesContainer.getChildren().addAll(labelTypePiece,selectTypePiece,labelSurfacePiece,surfacePiece,labelEquipementPiece,equipementPiece,labelNbEquipement,selectnbequipements);
             selectnbequipements.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
                 choixuti = newValue;
                 System.out.println("Nouvelle valeur de choixuti : " + choixuti);
-                updateUI(choixuti, finalI); // Mettez à jour l'UI en fonction de la nouvelle valeur de choixuti
+                for (int j = 1; j <= choixuti; j++) {
+                    Label labelNomEquip = new Label("NOM DE LEQUIPEMENT n° " + j + " DE LA PIECE : " + finalI);
+                    TextField nomEquip = new TextField();
+                    piecesContainer.getChildren().addAll(labelNomEquip, nomEquip);
+                }
             });
         }
     }
-    private void updateUI(int choixuti, int i) {
 
-        for (int j = 1; j <= choixuti; j++) {
-            Label labelNomEquip = new Label("NOM DE LEQUIPEMENT n° " + j + " DE LA PIECE : " + i);
-            TextField nomEquip = new TextField();
-            piecesContainer.getChildren().addAll(labelNomEquip, nomEquip);
-        }
-    }
 
 }
