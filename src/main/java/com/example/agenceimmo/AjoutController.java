@@ -35,66 +35,66 @@ public class AjoutController {
         // Ajouter un type d'extension sur mon Chooser
         chooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Image", "*.jpg", "*.jpeg", "*.png"));
         if (file != null) {
-            msgajoutphoto.setText("Fichier sélectionné : " + file.getName());
-            msgajoutphoto.setVisible(true);
+            file.toPath();
+            String Typemime = URLConnection.guessContentTypeFromName(file.getName());
+            if(Typemime.equals("image/png") ||Typemime.equals("image/jpeg") || Typemime.equals("image/bmp")) {
+                msgajoutphoto.setText("Fichier sélectionné : " + file.getName());
+                msgajoutphoto.setVisible(true);
+                String fileAsString = file.toString();
+                System.out.println("On va uploader : " + fileAsString);
+                FileSystemManager manager = null;
+                try {
+                    manager = VFS.getManager();
+
+                    FileSystemOptions fsOptions = new FileSystemOptions();
+                    SftpFileSystemConfigBuilder.getInstance().setStrictHostKeyChecking(fsOptions, "no");
+                    SftpFileSystemConfigBuilder.getInstance().setUserDirIsRoot(fsOptions, false);
+                    SftpFileSystemConfigBuilder.getInstance().setTimeout(fsOptions, 10000);
+                    FileSystemManager fsManager = VFS.getManager();
+                    // découpe du fichier
+
+                    String uri = "sftp://agenceimmo:0550002D@172.19.0.44/var/www/html/uploads/" + file.getName();
+
+                    FileObject fo = fsManager.resolveFile(uri, fsOptions);
+                    FileObject local = manager.resolveFile(fileAsString);
+
+                    fo.copyFrom(local, new AllFileSelector());
+
+                    fo.close();
+                    local.close();
+
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                    e.printStackTrace();
+                }
+
+                try {
+                    Connection co = DriverManager.getConnection("jdbc:mysql://172.19.0.44/Immobilier", "agentimmobilier", "0550002D");
+
+                    String resSelect = "SELECT COUNT(*) FROM Photo WHERE lien=?";
+                    PreparedStatement stmtSelect = co.prepareStatement(resSelect);
+                    stmtSelect.setString(1, file.getName());
+                    ResultSet res = stmtSelect.executeQuery();
+                    String mimeType = URLConnection.guessContentTypeFromName(file.getName());
+                    String requete = "INSERT INTO Photo (taille, type, lien) VALUES (?, ?, ?)";
+                    PreparedStatement stmt = co.prepareStatement(requete);
+                    stmt.setLong(1, file.length());
+                    stmt.setString(2, mimeType);
+                    stmt.setString(3, file.getName());
+                    stmt.execute();
+                    stmt.close();
+                    co.close();
+                    // à finir
+                } catch (SQLException e) {
+                    System.out.println(e.getMessage());
+                    e.printStackTrace();
+                }
+            }else{
+                System.out.println("mauvais type d'image");
+            }
+
         } else {
             msgajoutphoto.setVisible(false);
-        }
-        if(file != null){
-            String fileAsString = file.toString();
-            System.out.println("On va uploader : " + fileAsString);
-            FileSystemManager manager = null;
-            try{
-                manager = VFS.getManager();
-
-                FileSystemOptions fsOptions = new FileSystemOptions();
-                SftpFileSystemConfigBuilder.getInstance().setStrictHostKeyChecking(fsOptions, "no");
-                SftpFileSystemConfigBuilder.getInstance().setUserDirIsRoot(fsOptions, false);
-                SftpFileSystemConfigBuilder.getInstance().setTimeout(fsOptions, 10000);
-                FileSystemManager fsManager = VFS.getManager();
-                // découpe du fichier
-
-                String uri = "sftp://agenceimmo:0550002D@172.19.0.44/var/www/html/uploads/"+file.getName();
-
-                FileObject fo = fsManager.resolveFile(uri, fsOptions);
-                FileObject local = manager.resolveFile(fileAsString);
-
-                fo.copyFrom(local, new AllFileSelector());
-
-                fo.close();
-                local.close();
-
-            }catch(Exception e){
-                System.out.println(e.getMessage());
-                e.printStackTrace();
-            }
-
-            try{
-                Connection co = DriverManager.getConnection("jdbc:mysql://172.19.0.44/Immobilier", "agentimmobilier", "0550002D");
-
-                String resSelect = "SELECT COUNT(*) FROM Photo WHERE lien=?";
-                PreparedStatement stmtSelect = co.prepareStatement(resSelect);
-                stmtSelect.setString(1, file.getName());
-                ResultSet res = stmtSelect.executeQuery();
-                //if(res > 0){
-
-                //}
-
-                String mimeType = URLConnection.guessContentTypeFromName(file.getName());
-                String requete = "INSERT INTO Photo (taille, type, lien) VALUES (?, ?, ?)";
-                PreparedStatement stmt = co.prepareStatement(requete);
-                stmt.setLong(1, file.length());
-                stmt.setString(2, mimeType);
-                stmt.setString(3, file.getName());
-                stmt.execute();
-                stmt.close();
-                co.close();
-                // à finir
-            } catch (SQLException e) {
-                System.out.println(e.getMessage());
-                e.printStackTrace();
-            }
-        } else {
             System.out.println("On va rien faire, comme tu veux !");
         }
     }
