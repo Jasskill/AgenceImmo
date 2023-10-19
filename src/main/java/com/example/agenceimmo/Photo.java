@@ -2,10 +2,15 @@ package com.example.agenceimmo;
 
 public class Photo {
     private int id;
-    private String nom;
+    private String lien;
     private int size;
     private String type;
-    private byte bin;
+
+    private Logement leLogement;
+
+    private Piece laPiece;
+
+    private Equipement lEquipement;
 
     public int getId(){
         return this.id;
@@ -13,12 +18,12 @@ public class Photo {
     public void setId(int id) {
         this.id = id;
     }
-    public String getNom(){
-        return this.nom;
+    public String getLien(){
+        return this.lien;
     }
 
-    public void setNom(String nom) {
-        this.id = id;
+    public void setLien(String lien) {
+        this.lien = lien;
     }
     public int getSize(){
         return this.size;
@@ -32,17 +37,34 @@ public class Photo {
     public void setType(String type){
         this.type = type;
     }
-    public void setBin(byte bin){
-        this.bin = bin;
-    }
-    public byte getBin(){
-        return this.bin;
-    }
-    public Photo(int unId, String unNom, int uneTaille, String unType, byte unBin){
+    public Photo(int unId, String unLien, int uneTaille, String unType){
         this.id = unId;
-        this.nom = unNom;
+        this.lien = unLien;
         this.size = uneTaille;
         this.type = unType;
-        this.bin = unBin;
+    }
+
+    public Logement getLeLogement() {
+        return leLogement;
+    }
+
+    public void setLeLogement(Logement leLogement) {
+        this.leLogement = leLogement;
+    }
+
+    public Piece getLaPiece() {
+        return laPiece;
+    }
+
+    public void setLaPiece(Piece laPiece) {
+        this.laPiece = laPiece;
+    }
+
+    public Equipement getlEquipement() {
+        return lEquipement;
+    }
+
+    public void setlEquipement(Equipement lEquipement) {
+        this.lEquipement = lEquipement;
     }
 }

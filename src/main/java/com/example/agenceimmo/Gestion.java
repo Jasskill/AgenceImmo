@@ -5,19 +5,22 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Gestion {
     private ArrayList<Logement> lesLogements;
 
     public Gestion(){
-        this.lesLogements = new ArrayList<Logement>();
+        this.recupererLogements();
+        this.recupererPhotos();
+        this.recupererPieces();
     }
 
     public ArrayList<Logement> recupererLogements(){
         ArrayList<Logement> lesLogements = new ArrayList<Logement>();
 
         try{
-            Connection coBaseImmobilier = DriverManager.getConnection("jdbc:mysql://172.19.0.103/Immobilier", "dev", "0550002D");
+            Connection coBaseImmobilier = DriverManager.getConnection("jdbc:mysql://172.19.0.44/Immobilier", "agentimmobilier", "0550002D");
             Statement stmt = coBaseImmobilier.createStatement();
             String requete = "SELECT id, rue, codePostal, ville, description FROM Logement ORDER BY id ASC";
             ResultSet res = stmt.executeQuery(requete);
@@ -41,7 +44,79 @@ public class Gestion {
             e.printStackTrace();
             System.out.println(e.getMessage());
         }
-
+        this.lesLogements = lesLogements;
         return lesLogements;
+    }
+
+    public void recupererPhotos(){
+        try{
+            Connection coBaseImmobilier = DriverManager.getConnection("jdbc:mysql://172.19.0.44/Immobilier", "agentimmobilier", "0550002D");
+            Statement stmt = coBaseImmobilier.createStatement();
+            String requete = "SELECT id, taille, type, lien, idLogement FROM Photo ORDER BY id ASC";
+            ResultSet res = stmt.executeQuery(requete);
+            while (res.next())
+            {
+                int id = res.getInt("photo.id");
+                int taille = res.getInt("photo.taille");
+                String type = res.getString("photo.type");
+                String lien = res.getString("photo.lien");
+                Object idLogementO = res.getObject("photo.idLogement");
+                Photo unePhoto = new Photo(id, lien, taille, type);
+                if(idLogementO != null){
+                    int idLogement = res.getInt("photo.idLogement");
+                    for(Logement l : this.lesLogements){
+                        if(idLogement == l.getId()){
+                            unePhoto.setLeLogement(l);
+                            l.ajouterPhoto(unePhoto);
+                            break;
+                        }
+                    }
+                }
+            }
+
+            res.close();
+            stmt.close();
+            coBaseImmobilier.close();
+        }catch(Exception e){
+
+        }
+
+    }
+
+    public void recupererPieces(){
+        try{
+            Connection coBaseImmobilier = DriverManager.getConnection("jdbc:mysql://172.19.0.44/Immobilier", "agentimmobilier", "0550002D");
+            Statement stmt = coBaseImmobilier.createStatement();
+            String requete = "SELECT id, surface, type, idLogement FROM Piece ORDER BY id ASC";
+            ResultSet res = stmt.executeQuery(requete);
+            while (res.next())
+            {
+
+                int id = res.getInt("piece.id");
+
+                int surface = res.getInt("piece.surface");
+                String type = res.getString("piece.type");
+                int idlogement = res.getInt("piece.idLogement");
+                Piece uneP = new Piece(id, surface, type);
+
+                for(Logement l : this.lesLogements){
+                    if(idlogement == l.getId()){
+
+                        uneP.setLeLogement(l);
+
+                        l.ajouterPiece(uneP);
+                        break;
+                    }
+
+                }
+
+            }
+
+            res.close();
+            stmt.close();
+            coBaseImmobilier.close();
+        }catch(Exception e){
+
+        }
     }
 }
