@@ -4,9 +4,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 public class Connexion {
-    private String URL;
-    private String LOGIN;
-    private String MDP;
+    private static String URL = "jdbc:mysql://172.19.0.44:3306/Immobilier" ;
+    private static String LOGIN = "agentimmobilier";
+    private static String MDP = "0550002D";
 
     public String getUrl() {
         return this.URL;
@@ -31,12 +31,8 @@ public class Connexion {
     public void setMDP() {
         this.MDP = MDP;
     }
-
-    public Connexion(String unurl, String unlogin, String unmdp) {
-        this.URL = unurl;
-        this.LOGIN = unlogin;
-        this.MDP = unmdp;
-
+    public static void getConnexion(){
+        return DriverManager.getConnection(this.getUrl(), this.getLOGIN(), this.getMDP());
     }
 
 
