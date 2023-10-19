@@ -1,5 +1,9 @@
 package com.example.agenceimmo;
 
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
+import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -171,6 +175,19 @@ public class Gestion {
                 Object idPieceO = res.getObject("photo.idPiece");
                 Object idEquipementO = res.getObject("photo.idEquipement");
                 Photo unePhoto = new Photo(id, lien, taille, type);
+                try{
+                    /*
+                    ImageView unContenu = new ImageView();
+                    File file = new File("sftp://agenceimmo:0550002D@172.19.0.44/var/www/html/uploads/" + lien);
+                    String localUrl = file.toURI().toURL().toString();
+                    Image image = new Image(localUrl);
+                    unContenu.setImage(image);
+                    unePhoto.setContenu(unContenu);
+                     */
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+
                 if(idLogementO != null){
                     int idLogement = res.getInt("photo.idLogement");
                     for(Logement l : this.getLesLogements()){

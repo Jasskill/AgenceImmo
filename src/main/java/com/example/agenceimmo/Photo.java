@@ -1,10 +1,14 @@
 package com.example.agenceimmo;
 
+import javafx.scene.image.ImageView;
+
 public class Photo {
     private int id;
     private String lien;
     private int size;
     private String type;
+
+    private ImageView contenu;
 
     private Logement leLogement;
 
@@ -66,5 +70,13 @@ public class Photo {
 
     public void setlEquipement(Equipement lEquipement) {
         this.lEquipement = lEquipement;
+    }
+
+    public ImageView getContenu() {
+        return contenu;
+    }
+
+    public void setContenu(ImageView contenu) {
+        this.contenu = contenu;
     }
 }

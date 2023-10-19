@@ -10,10 +10,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -39,7 +41,7 @@ public class PrincipalController {
     private TableView<Logement> tableLogements;
 
     @FXML
-    private TableColumn<Logement, ImageView> colonneImage;
+    private TableColumn<Photo, ImageView> colonneImage;
 
     @FXML
     private TableColumn<Logement, String> colonneCodePostal;
@@ -60,6 +62,7 @@ public class PrincipalController {
 
 
     public void initialize() {
+        colonneImage.setCellValueFactory(new PropertyValueFactory<Photo, ImageView>("contenu"));
         colonneCodePostal.setCellValueFactory(new PropertyValueFactory<Logement, String>("codePostale"));
         colonneVille.setCellValueFactory(new PropertyValueFactory<Logement, String>("ville"));
         colonneRue.setCellValueFactory(new PropertyValueFactory<Logement, String>("rue"));
@@ -72,6 +75,17 @@ public class PrincipalController {
             throw new RuntimeException(e);
         }
         tableLogements.setItems(list);
+
+        // An image file on the hard drive.
+        try{
+            File file = new File("./image/logement_test.jpg");
+            String localUrl = file.toURI().toURL().toString();
+            Image image = new Image(localUrl);
+            uneImage.setImage(image);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
     }
 
     @FXML
