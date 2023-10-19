@@ -55,7 +55,7 @@ public class PrincipalController {
 
     public ObservableList<Logement> list = FXCollections.observableArrayList();
 
-    Gestion g = new Gestion();
+    public Gestion g = new Gestion();
 
 
 
@@ -65,13 +65,12 @@ public class PrincipalController {
         colonneRue.setCellValueFactory(new PropertyValueFactory<Logement, String>("rue"));
         colonnePieces.setCellValueFactory(new PropertyValueFactory<Logement, Integer>("nbPiece"));
         try {
-            for(Logement l : g.recupererLogements()){
+            for(Logement l : g.getLesLogements()){
                 list.add(l);
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
         tableLogements.setItems(list);
     }
 

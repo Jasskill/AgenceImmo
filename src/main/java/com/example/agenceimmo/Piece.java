@@ -11,6 +11,7 @@ public class Piece {
     private Logement leLogement;
 
     private ArrayList<Equipement> lesEquipement;
+    private ArrayList<Photo> lesPhotos;
 
 
 
@@ -60,5 +61,21 @@ public class Piece {
 
     public void setLesEquipement(ArrayList<Equipement> lesEquipement) {
         this.lesEquipement = lesEquipement;
+    }
+
+    public ArrayList<Photo> getLesPhotos() {
+        return lesPhotos;
+    }
+
+    public void setLesPhotos(ArrayList<Photo> lesPhotos) {
+        this.lesPhotos = lesPhotos;
+    }
+
+    public void ajouterEquipement(Equipement e){
+        this.lesEquipement.add(e);
+    }
+
+    public void ajouterPhoto(Photo p){
+        this.lesPhotos.add(p);
     }
 }

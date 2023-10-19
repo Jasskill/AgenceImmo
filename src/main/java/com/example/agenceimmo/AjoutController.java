@@ -13,11 +13,10 @@ import javafx.stage.Stage;
 import javafx.scene.control.Label;
 import java.io.File;
 import java.io.IOException;
+import java.net.URLConnection;
 import java.nio.file.FileSystem;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+
 import javafx.scene.control.ComboBox;
 
 
@@ -71,9 +70,25 @@ public class AjoutController {
             }
 
             try{
-                Connection co = DriverManager.getConnection("jdbc:mysql://172.19.0.103/Immobilier", "dev", "0550002D");
-                Statement stmt = co.createStatement();
-                String requete = "INSERT INTO Photo ()";
+                Connection co = DriverManager.getConnection("jdbc:mysql://172.19.0.44/Immobilier", "agentimmobilier", "0550002D");
+
+                String resSelect = "SELECT COUNT(*) FROM Photo WHERE lien=?";
+                PreparedStatement stmtSelect = co.prepareStatement(resSelect);
+                stmtSelect.setString(1, file.getName());
+                ResultSet res = stmtSelect.executeQuery();
+                //if(res > 0){
+
+                //}
+
+                String mimeType = URLConnection.guessContentTypeFromName(file.getName());
+                String requete = "INSERT INTO Photo (taille, type, lien) VALUES (?, ?, ?)";
+                PreparedStatement stmt = co.prepareStatement(requete);
+                stmt.setLong(1, file.length());
+                stmt.setString(2, mimeType);
+                stmt.setString(3, file.getName());
+                stmt.execute();
+                stmt.close();
+                co.close();
                 // à finir
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
@@ -83,6 +98,7 @@ public class AjoutController {
             System.out.println("On va rien faire, comme tu veux !");
         }
     }
+
     @FXML
     private ComboBox<String> combonbpieces;
     @FXML

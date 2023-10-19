@@ -1,8 +1,14 @@
 package com.example.agenceimmo;
 
+import java.util.ArrayList;
+
 public class Equipement {
     private int id;
     private String libelle;
+
+    private Piece laPiece;
+
+    private ArrayList<Photo> lesPhotos;
 
     public int getId() {
         return this.id;
@@ -23,5 +29,25 @@ public class Equipement {
     public Equipement(int unId, String unLibelle){
         this.id = unId;
         this.libelle = unLibelle;
+    }
+
+    public Piece getLaPiece() {
+        return laPiece;
+    }
+
+    public void setLaPiece(Piece laPiece) {
+        this.laPiece = laPiece;
+    }
+
+    public ArrayList<Photo> getLesPhotos() {
+        return lesPhotos;
+    }
+
+    public void setLesPhotos(ArrayList<Photo> lesPhotos) {
+        this.lesPhotos = lesPhotos;
+    }
+
+    public void ajouterPhoto(Photo p){
+        this.lesPhotos.add(p);
     }
 }
