@@ -10,10 +10,11 @@ public class Logement {
     private String description;
 
     private ArrayList<Piece> lesPieces;
+    private ArrayList<Photo> lesPhotos;
 
     private int nbPiece;
 
-    private ArrayList<Photo> lesPhotos;
+
 
 
     public int getId(){

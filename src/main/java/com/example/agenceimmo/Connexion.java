@@ -8,31 +8,26 @@ public class Connexion {
     private static String LOGIN = "agentimmobilier";
     private static String MDP = "0550002D";
 
-    public String getUrl() {
-        return this.URL;
+    public static String getUrl() {
+        return URL;
     }
 
-    public void setURL() {
-        this.URL = URL;
+    public static String getLOGIN() {
+        return LOGIN;
     }
 
-    public String getLOGIN() {
-        return this.LOGIN;
+    public static String getMDP() {
+        return MDP;
     }
 
-    public void setLOGIN() {
-        this.LOGIN = LOGIN;
-    }
+    public static Connection getConnexion(){
+        Connection co = null;
+        try{
+            co = DriverManager.getConnection(Connexion.getUrl(), Connexion.getLOGIN(), Connexion.getMDP());
+        }catch(Exception e){
 
-    public String getMDP() {
-        return this.MDP;
-    }
-
-    public void setMDP() {
-        this.MDP = MDP;
-    }
-    public static void getConnexion(){
-        return DriverManager.getConnection(this.getUrl(), this.getLOGIN(), this.getMDP());
+        }
+        return co;
     }
 
 
