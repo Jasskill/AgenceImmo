@@ -76,15 +76,12 @@ public class ConnexionController {
         String mdp = prompTextPassword.getText();
         try{
             Connection coBaseImmobilier = DriverManager.getConnection("jdbc:mysql://172.19.0.44/Immobilier", "agentimmobilier", "0550002D");
-            String requete = "SELECT mdp, mail FROM Utilisateur WHERE mail = ? ";
+            String requete = "SELECT mdp FROM Utilisateur WHERE mail = ? ";
             PreparedStatement stmtSelect = coBaseImmobilier.prepareStatement(requete);
             stmtSelect.setString(1, user);
             ResultSet res = stmtSelect.executeQuery();
             while (res.next()){
-                String leNom = res.getString("utiisateur.nom");
-                String lePnom = res.getString("utilisateur.prenom");
                 String leMdp = res.getString("utilisateur.mdp");
-                String leMail = res.getString("utilisateur.mail");
                 if (leMdp.equals(mdp)){
                     Stage newWindow = new Stage();
                     FXMLLoader fxmlLoader = new FXMLLoader(AgenceImmo.class.getResource("principal.fxml"));
