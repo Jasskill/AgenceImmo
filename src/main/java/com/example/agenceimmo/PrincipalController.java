@@ -23,7 +23,6 @@ public class PrincipalController {
 
     @FXML
     private Button boutonAjouter;
-
     @FXML
     private Button boutonDeco;
 

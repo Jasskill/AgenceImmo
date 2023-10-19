@@ -1,8 +1,11 @@
 package com.example.agenceimmo;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -10,6 +13,8 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
 
 public class ConnexionController {
     @FXML
@@ -33,18 +38,62 @@ public class ConnexionController {
 
 
     @FXML
-    protected void onHelloButtonClick() {
-        welcomeText.setText("Welcome to JavaFX Application!");
+    public void connexUser(ActionEvent e)throws IOException{
+        checkLogin();
+    }
+
+    private void checkLogin() throws IOException {
+        Main m = new Main();
+        String user = prompTextUsername.getText();
+        String mdp = prompTextUsername.getText();
+
+        /*if (prompTextUsername.getText().toString().equals("javacoding") && prompTextPasword.getText().toString().equals("mdp")){
+            wrongLogin
+        }
+
+         */
+        //methode d'essaie à supprimer quand userLogin sera fonctionnel
+        if ("admin".equals(mdp)){
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("principal.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) ButtonLogin.getScene().getWindow();
+            Scene scene = new Scene(root);
+        }else{
+            //Bdd bdd = new Bdd;
+
+        }
+
+    }
+
+
+    private boolean bonIdentifiaction(String user,String mdp){
+        return "admin".equals(user) && "password".equals(mdp);
     }
 
     @FXML
     protected void userLogIn() throws IOException {
-        Stage newWindow = new Stage();
-        FXMLLoader fxmlLoader = new FXMLLoader(AgenceImmo.class.getResource("principal.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 1280, 720);
-        newWindow.setScene(scene);
-        // Specifies the modality for new window.
-        newWindow.initModality(Modality.APPLICATION_MODAL);
-        newWindow.show();
+        Main m = new Main();
+        String user = prompTextUsername.getText();
+        String mdp = prompTextUsername.getText();
+
+        if ("admin".equals(mdp)){
+            Stage newWindow = new Stage();
+            FXMLLoader fxmlLoader = new FXMLLoader(AgenceImmo.class.getResource("principal.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), 1280, 720);
+            newWindow.setScene(scene);
+            // Specifies the modality for new window.
+            newWindow.initModality(Modality.APPLICATION_MODAL);
+            newWindow.show();
+
+
+        }else {
+        }
+
+        Alert uneAlerte = new Alert(Alert.AlertType.ERROR);
+        uneAlerte.setContentText("Login ou mot de passe incorrect");
+        uneAlerte.show();
+
+
+
     }
 }

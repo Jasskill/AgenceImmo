@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #DDD0C8;" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.agenceimmo.PrincipalController">
+   <children>
+      <Button fx:id="boutonDeco" layoutX="1181.0" layoutY="42.0" mnemonicParsing="false" text="Déconnexion" onAction="#onBoutonDecoClick" />
+      <Label fx:id="labelUtilisateur" layoutX="1182.0" layoutY="14.0" text="Nom Utilisateur" />
+      <Button fx:id="boutonAjouter" layoutX="14.0" layoutY="10.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="138.0" text="Ajouter" onAction="#onBoutonAjouterClick" />
+      <TableView fx:id="tableLogements" layoutX="9.0" layoutY="88.0" prefHeight="621.0" prefWidth="1257.0">
+        <columns>
+          <TableColumn fx:id="colonneImage" prefWidth="495.66664600372314" text="Image" />
+          <TableColumn fx:id="colonneCodePostal" minWidth="0.0" prefWidth="397.6667175292969" text="Code Postal" />
+          <TableColumn fx:id="colonneVille" prefWidth="105.66668701171875" text="Ville" />
+          <TableColumn fx:id="colonneRue" prefWidth="41.66656494140625" text="Rue" />
+          <TableColumn fx:id="colonnePieces" prefWidth="216.666748046875" text="Pieces" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>

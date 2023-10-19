@@ -1,4 +1,8 @@
 package com.example.agenceimmo;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+
 public class Connexion {
     private String URL;
     private String LOGIN;
@@ -32,6 +36,8 @@ public class Connexion {
         this.URL = unurl;
         this.LOGIN = unlogin;
         this.MDP = unmdp;
+
     }
+
 
 }
