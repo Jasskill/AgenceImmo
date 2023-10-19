@@ -29,7 +29,7 @@ public class ConnexionController {
     @FXML
     private TextField prompTextUsername;
     @FXML
-    private TextField prompTextPasword;
+    private TextField prompTextPassword;
     @FXML
     private Button ButtonLogin;
     @FXML
@@ -44,7 +44,7 @@ public class ConnexionController {
     private void checkLogin() throws IOException {
         Main m = new Main();
         String user = prompTextUsername.getText();
-        String mdp = prompTextUsername.getText();
+        String mdp = prompTextPassword.getText();
 
         /*if (prompTextUsername.getText().toString().equals("javacoding") && prompTextPasword.getText().toString().equals("mdp")){
             wrongLogin
@@ -73,49 +73,39 @@ public class ConnexionController {
     protected void userLogIn() throws IOException {
         Main m = new Main();
         String user = prompTextUsername.getText();
-        String mdp = prompTextUsername.getText();
-
-            try{
-                Connection coBaseImmobilier = DriverManager.getConnection("jdbc:mysql://172.19.0.44/Immobilier", "agentimmobilier", "0550002D");
-                String requete = "SELECT mdp, mail FROM Utilisateur WHERE utilisateur.mail = ? ";
-                PreparedStatement stmtSelect = coBaseImmobilier.prepareStatement(requete);
-                stmtSelect.setString(1, user);
-                ResultSet res = stmtSelect.executeQuery();
-
-                while (res.next()){
-                    String leNom = res.getString("utiisateur.nom");
-                    String lePnom = res.getString("utilisateur.prenom");
-                    String leMdp = res.getString("utilisateur.mdp");
-                    String leMail = res.getString("utilisateur.mail");
-
-                    if (leMdp.equals(mdp)){
-                        Stage newWindow = new Stage();
-                        FXMLLoader fxmlLoader = new FXMLLoader(AgenceImmo.class.getResource("principal.fxml"));
-                        Scene scene = new Scene(fxmlLoader.load(), 1280, 720);
-                        newWindow.setScene(scene);
-                        // Specifies the modality for new window.
-                        newWindow.initModality(Modality.APPLICATION_MODAL);
-                        newWindow.show();
-
-
-                    }else {
-
-                        Alert uneAlerte = new Alert(Alert.AlertType.ERROR);
-                        uneAlerte.setContentText("Login ou mot de passe incorrect");
-                        uneAlerte.show();
-                    }
+        String mdp = prompTextPassword.getText();
+        try{
+            Connection coBaseImmobilier = DriverManager.getConnection("jdbc:mysql://172.19.0.44/Immobilier", "agentimmobilier", "0550002D");
+            String requete = "SELECT mdp, mail FROM Utilisateur WHERE mail = ? ";
+            PreparedStatement stmtSelect = coBaseImmobilier.prepareStatement(requete);
+            stmtSelect.setString(1, user);
+            ResultSet res = stmtSelect.executeQuery();
+            while (res.next()){
+                String leNom = res.getString("utiisateur.nom");
+                String lePnom = res.getString("utilisateur.prenom");
+                String leMdp = res.getString("utilisateur.mdp");
+                String leMail = res.getString("utilisateur.mail");
+                if (leMdp.equals(mdp)){
+                    Stage newWindow = new Stage();
+                    FXMLLoader fxmlLoader = new FXMLLoader(AgenceImmo.class.getResource("principal.fxml"));
+                    Scene scene = new Scene(fxmlLoader.load(), 1280, 720);
+                    newWindow.setScene(scene);
+                    // Specifies the modality for new window.
+                    newWindow.initModality(Modality.APPLICATION_MODAL);
+                    newWindow.show();
+                }else {
+                    Alert uneAlerte = new Alert(Alert.AlertType.ERROR);
+                    uneAlerte.setContentText("Login ou mot de passe incorrect");
+                    uneAlerte.show();
                 }
-
-
-
-
-
-                res.close();
-                stmtSelect.close();
-                coBaseImmobilier.close();
-        }catch (Exception e){
-
             }
+            res.close();
+            stmtSelect.close();
+            coBaseImmobilier.close();
+        }catch (Exception e){
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
 
 
 
