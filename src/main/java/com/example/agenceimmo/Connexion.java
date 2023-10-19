@@ -2,11 +2,13 @@ package com.example.agenceimmo;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class Connexion {
-    private String URL;
-    private String LOGIN;
-    private String MDP;
+    private String URL = "jdbc:mysql://172.19.0.44/Immobilier";
+    private String LOGIN = "agentImmoblier";
+    private String MDP = "0550002D";
 
     public String getUrl() {
         return this.URL;
@@ -38,6 +40,15 @@ public class Connexion {
         this.MDP = unmdp;
 
     }
+
+
+    public Connection getConnection() throws SQLException {
+
+        Connection coDbImmo = DriverManager.getConnection(URL,LOGIN,MDP);
+        Statement statement = coDbImmo.createStatement();
+        return coDbImmo;
+    }
+
 
 
 }

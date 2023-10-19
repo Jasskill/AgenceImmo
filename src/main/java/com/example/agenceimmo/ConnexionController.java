@@ -13,8 +13,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
+import java.sql.*;
 
 public class ConnexionController {
     @FXML
@@ -76,24 +75,54 @@ public class ConnexionController {
         String user = prompTextUsername.getText();
         String mdp = prompTextUsername.getText();
 
-        if ("admin".equals(mdp)){
-            Stage newWindow = new Stage();
-            FXMLLoader fxmlLoader = new FXMLLoader(AgenceImmo.class.getResource("principal.fxml"));
-            Scene scene = new Scene(fxmlLoader.load(), 1280, 720);
-            newWindow.setScene(scene);
-            // Specifies the modality for new window.
-            newWindow.initModality(Modality.APPLICATION_MODAL);
-            newWindow.show();
+            try{
+                Connection coBaseImmobilier = DriverManager.getConnection("jdbc:mysql://172.19.0.44/Immobilier", "agentimmobilier", "0550002D");
+                String requete = "SELECT mdp, mail FROM Utilisateur WHERE utilisateur.mail = ? ";
+                PreparedStatement stmtSelect = coBaseImmobilier.prepareStatement(requete);
+                stmtSelect.setString(1, user);
+                ResultSet res = stmtSelect.executeQuery();
+
+                while (res.next()){
+                    String leNom = res.getString("utiisateur.nom");
+                    String lePnom = res.getString("utilisateur.prenom");
+                    String leMdp = res.getString("utilisateur.mdp");
+                    String leMail = res.getString("utilisateur.mail");
+
+                    if (leMdp.equals(mdp)){
+                        Stage newWindow = new Stage();
+                        FXMLLoader fxmlLoader = new FXMLLoader(AgenceImmo.class.getResource("principal.fxml"));
+                        Scene scene = new Scene(fxmlLoader.load(), 1280, 720);
+                        newWindow.setScene(scene);
+                        // Specifies the modality for new window.
+                        newWindow.initModality(Modality.APPLICATION_MODAL);
+                        newWindow.show();
 
 
-        }else {
-        }
+                    }else {
 
-        Alert uneAlerte = new Alert(Alert.AlertType.ERROR);
-        uneAlerte.setContentText("Login ou mot de passe incorrect");
-        uneAlerte.show();
+                        Alert uneAlerte = new Alert(Alert.AlertType.ERROR);
+                        uneAlerte.setContentText("Login ou mot de passe incorrect");
+                        uneAlerte.show();
+                    }
+                }
 
 
 
-    }
+
+
+                res.close();
+                stmtSelect.close();
+                coBaseImmobilier.close();
+        }catch (Exception e){
+
+            }
+
+
+
+
+
+
+
+
+}
 }
