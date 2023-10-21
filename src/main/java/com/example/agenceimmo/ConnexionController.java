@@ -1,5 +1,6 @@
 package com.example.agenceimmo;
 
+import com.jcraft.jsch.jce.SHA256;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,8 +13,13 @@ import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 import java.io.IOException;
+import java.security.MessageDigest;
 import java.sql.*;
+
+
 
 public class ConnexionController {
     @FXML
@@ -80,9 +86,28 @@ public class ConnexionController {
             PreparedStatement stmtSelect = coBaseImmobilier.prepareStatement(requete);
             stmtSelect.setString(1, user);
             ResultSet res = stmtSelect.executeQuery();
+
+            /*
+            Test hash avec SHA-256
+            MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
+            byte[] data = user.getBytes();
+            byte[] hashData = messageDigest.digest(data);
+            */
+
+
+
+
+            String salt = BCrypt.gensalt();
+            String mdpHash = BCrypt.hashpw(mdp, salt);
+
+
+
             while (res.next()){
                 String leMdp = res.getString("utilisateur.mdp");
-                if (leMdp.equals(mdp)){
+                String mdpBddHash = BCrypt.hashpw(leMdp, salt);
+
+                boolean verif = BCrypt.checkpw(mdpHash, mdpBddHash);
+                if (verif){
                     Stage newWindow = new Stage();
                     FXMLLoader fxmlLoader = new FXMLLoader(AgenceImmo.class.getResource("principal.fxml"));
                     Scene scene = new Scene(fxmlLoader.load(), 1280, 720);
