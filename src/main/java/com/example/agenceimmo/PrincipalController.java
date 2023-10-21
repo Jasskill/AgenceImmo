@@ -62,7 +62,7 @@ public class PrincipalController {
 
 
     public void initialize() {
-        colonneImage.setCellValueFactory(new PropertyValueFactory<Photo, ImageView>("contenu"));
+        //colonneImage.setCellValueFactory(new PropertyValueFactory<Photo, ImageView>("contenu"));
         colonneCodePostal.setCellValueFactory(new PropertyValueFactory<Logement, String>("codePostale"));
         colonneVille.setCellValueFactory(new PropertyValueFactory<Logement, String>("ville"));
         colonneRue.setCellValueFactory(new PropertyValueFactory<Logement, String>("rue"));

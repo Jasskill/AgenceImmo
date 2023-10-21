@@ -88,4 +88,9 @@ public class Piece {
     public void ajouterPhoto(Photo p){
         this.lesPhotos.add(p);
     }
+
+    public String toString(){
+        System.out.println("Piece : " + this.getId() + " ; " + this.getSurface() + " ; " + this.getType() + " ; " + this.getLeLogement().getId());
+        return null;
+    }
 }

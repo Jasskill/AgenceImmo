@@ -174,6 +174,8 @@ public class AjoutController {
             if(res.getInt("c") == 0){
                 ok = true;
             }
+            stmtSelect.close();
+            co.close();
         }catch(SQLException e){
             System.out.println(e.getMessage());
             e.printStackTrace();
@@ -188,21 +190,68 @@ public class AjoutController {
     }
 
     public void envoyerLogementBDD(Logement leLogement){
-        /*
+
         try{
             Connection co = Connexion.getConnexion();
-            PreparedStatement stmtSelect = co.prepareStatement("INSERT INTO Logement(rue, codePostal, ville, description) VALUES (?,?,?,?)");
-            stmtSelect.setString(1, leLogement.getRue());
-            stmtSelect.setString(2, leLogement.getCodePostale());
-            stmtSelect.setString(3, leLogement.getVille());
-            stmtSelect.setString(4, leLogement.getDescription());
-            stmtSelect.execute();
+            //Envoie le Logement
+            PreparedStatement stmt = co.prepareStatement("INSERT INTO Logement(rue, codePostal, ville, description) VALUES (?,?,?,?)");
+            stmt.setString(1, leLogement.getRue());
+            stmt.setString(2, leLogement.getCodePostale());
+            stmt.setString(3, leLogement.getVille());
+            stmt.setString(4, leLogement.getDescription());
+            stmt.execute();
+            stmt = co.prepareStatement("SELECT LAST_INSERT_ID() as i FROM Logement");
+            ResultSet res = stmt.executeQuery();
+            res.next();
+            int id = res.getInt("i");
+            leLogement.setId(id);
+            System.out.println("\n\n");
+            System.out.println(leLogement.toString());
+
+            for(Piece unePiece : leLogement.getLesPieces()){
+                stmt = co.prepareStatement("INSERT INTO Piece(surface, type, idLogement) VALUES (?,?,?)");
+                stmt.setLong(1, unePiece.getSurface());
+                stmt.setString(2, unePiece.getType());
+                stmt.setInt(3, unePiece.getLeLogement().getId());
+                stmt.execute();
+                stmt = co.prepareStatement("SELECT LAST_INSERT_ID() as i FROM Piece");
+                res = stmt.executeQuery();
+                res.next();
+                id = res.getInt("i");
+                unePiece.setId(id);
+                unePiece.toString();
+                for(Equipement unEquipement : unePiece.getLesEquipement()){
+                    stmt = co.prepareStatement("INSERT INTO Equipement(libelle, idPiece, idLogement) VALUES (?,?,?)");
+                    stmt.setString(1, unEquipement.getLibelle());
+                    stmt.setInt(2, unEquipement.getLaPiece().getId());
+                    stmt.setInt(3, unEquipement.getLaPiece().getLeLogement().getId());
+                    stmt.execute();
+                    stmt = co.prepareStatement("SELECT LAST_INSERT_ID() as i FROM Equipement");
+                    res = stmt.executeQuery();
+                    res.next();
+                    id = res.getInt("i");
+                    unEquipement.setId(id);
+                    unEquipement.toString();
+                }
+            }
+
+            stmt.close();
+            co.close();
         }catch(SQLException e){
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
-        */
-        leLogement.setId(8);
+        try{
+            Connection co = Connexion.getConnexion();
+
+            co.close();
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+
+
+
     }
 
     public Logement creerLeLogement(){
@@ -210,17 +259,22 @@ public class AjoutController {
         ArrayList<Piece> lesPieces = new ArrayList<Piece>();
 
         for(int i=0;i<toutesLesTypesPieces.size();i++){
-            Piece p = new Piece(Integer.parseInt(toutesLesSurfaces.get(i).getText()), toutesLesTypesPieces.get(i).getValue());
+            Piece unePiece = new Piece(Integer.parseInt(toutesLesSurfaces.get(i).getText()), toutesLesTypesPieces.get(i).getValue());
+            unePiece.setLeLogement(leLogement);
             ArrayList<Equipement> lesEquipements = new ArrayList<Equipement>();
 
             for (TextField t : tousLesNomsEquipements.get(i)) {
                 Equipement unEquipement = new Equipement(t.getText());
+                unEquipement.setLaPiece(unePiece);
+                unEquipement.toString();
                 lesEquipements.add(unEquipement);
             }
-            p.setLesEquipement(lesEquipements);
-            lesPieces.add(p);
+            unePiece.setLesEquipement(lesEquipements);
+            unePiece.toString();
+            lesPieces.add(unePiece);
         }
         leLogement.setLesPieces(lesPieces);
+        System.out.println(leLogement.toString());
         return leLogement;
     }
 
@@ -235,6 +289,7 @@ public class AjoutController {
     public void onSelectNbPieces() {
         toutesLesTypesPieces = new ArrayList<ComboBox<String>>();
         toutesLesSurfaces = new ArrayList<TextField>();
+        tousLesNomsEquipements = new ArrayList<ArrayList<TextField>>();
 
         // Récupérer le nombre de pièces sélectionné
         int nombreDePieces = Integer.parseInt(combonbpieces.getValue());

@@ -54,4 +54,9 @@ public class Equipement {
     public void ajouterPhoto(Photo p){
         this.lesPhotos.add(p);
     }
+
+    public String toString(){
+        System.out.println("Equipement : " + this.getId() + " ; " + this.getLibelle() + " ; " + this.getLaPiece().getId() + " ; " + this.getLaPiece().getLeLogement().getId());
+        return null;
+    }
 }
