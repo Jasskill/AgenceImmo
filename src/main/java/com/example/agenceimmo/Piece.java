@@ -39,6 +39,16 @@ public class Piece {
         this.lesEquipement= new ArrayList<Equipement>();
     }
 
+    public Piece(int uneSurface, String unType){
+        this.surface = uneSurface;
+        this.type = unType;
+        this.lesEquipement= new ArrayList<Equipement>();
+    }
+
+    public Piece(){
+        this.lesEquipement= new ArrayList<Equipement>();
+    }
+
     public String getType() {
         return type;
     }

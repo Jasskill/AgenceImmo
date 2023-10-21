@@ -5,7 +5,7 @@ import javafx.scene.image.ImageView;
 public class Photo {
     private int id;
     private String lien;
-    private int size;
+    private long size;
     private String type;
 
     private ImageView contenu;
@@ -29,10 +29,10 @@ public class Photo {
     public void setLien(String lien) {
         this.lien = lien;
     }
-    public int getSize(){
+    public long getSize(){
         return this.size;
     }
-    public void setsize(int size){
+    public void setsize(long size){
         this.size = size;
     }
     public String getType(){
@@ -41,8 +41,14 @@ public class Photo {
     public void setType(String type){
         this.type = type;
     }
-    public Photo(int unId, String unLien, int uneTaille, String unType){
+    public Photo(int unId, String unLien, long uneTaille, String unType){
         this.id = unId;
+        this.lien = unLien;
+        this.size = uneTaille;
+        this.type = unType;
+    }
+
+    public Photo(String unLien, long uneTaille, String unType){
         this.lien = unLien;
         this.size = uneTaille;
         this.type = unType;

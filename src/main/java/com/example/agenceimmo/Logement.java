@@ -58,6 +58,15 @@ public class Logement {
         this.lesPieces = new ArrayList<Piece>();
     }
 
+    public Logement(String uneRue, String unCodePostale, String uneVille,String uneDescription ){
+        this.rue = uneRue;
+        this.codePostale = unCodePostale;
+        this.ville = uneVille;
+        this.description = uneDescription;
+        this.lesPhotos = new ArrayList<Photo>();
+        this.lesPieces = new ArrayList<Piece>();
+    }
+
     public String toString(){
         String leLogement = "";
 

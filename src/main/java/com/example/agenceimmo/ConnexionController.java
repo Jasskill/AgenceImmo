@@ -75,7 +75,7 @@ public class ConnexionController {
         String user = prompTextUsername.getText();
         String mdp = prompTextPassword.getText();
         try{
-            Connection coBaseImmobilier = DriverManager.getConnection("jdbc:mysql://172.19.0.44/Immobilier", "agentimmobilier", "0550002D");
+            Connection coBaseImmobilier = Connexion.getConnexion();
             String requete = "SELECT mdp FROM Utilisateur WHERE mail = ? ";
             PreparedStatement stmtSelect = coBaseImmobilier.prepareStatement(requete);
             stmtSelect.setString(1, user);

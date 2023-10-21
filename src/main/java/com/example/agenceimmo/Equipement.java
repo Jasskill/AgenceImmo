@@ -31,6 +31,10 @@ public class Equipement {
         this.libelle = unLibelle;
     }
 
+    public Equipement(String unLibelle){
+        this.libelle = unLibelle;
+    }
+
     public Piece getLaPiece() {
         return laPiece;
     }
