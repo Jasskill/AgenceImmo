@@ -94,19 +94,8 @@ public class ConnexionController {
             byte[] hashData = messageDigest.digest(data);
             */
 
-
-
-
-            String salt = BCrypt.gensalt();
-            String mdpHash = BCrypt.hashpw(mdp, salt);
-
-
-
             while (res.next()){
-                String leMdp = res.getString("utilisateur.mdp");
-                String mdpBddHash = BCrypt.hashpw(leMdp, salt);
-
-                boolean verif = BCrypt.checkpw(mdpHash, mdpBddHash);
+                boolean verif = BCrypt.checkpw(mdp, res.getString("utilisateur.mdp"));
                 if (verif){
                     Stage newWindow = new Stage();
                     FXMLLoader fxmlLoader = new FXMLLoader(AgenceImmo.class.getResource("principal.fxml"));

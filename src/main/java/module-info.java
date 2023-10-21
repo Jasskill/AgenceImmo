@@ -4,7 +4,7 @@ module com.example.agenceimmo {
     requires java.sql;
     requires jsch;
     requires commons.vfs2;
-    requires jbcrypt;
+    requires jBCrypt;
 
 
     opens com.example.agenceimmo to javafx.fxml;
