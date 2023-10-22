@@ -5,25 +5,11 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.ResourceBundle;
 
 public class VisualiserController {
     @FXML
@@ -72,4 +58,21 @@ public class VisualiserController {
         lesEquipements.setItems(listE);
     }
 
+    public void voirLesImages(){
+        try{
+            Stage newWindow = new Stage();
+            FXMLLoader fxmlLoader = new FXMLLoader(AgenceImmo.class.getResource("photo.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), 640, 320);
+            newWindow.setScene(scene);
+            // Specifies the modality for new window.
+            newWindow.initModality(Modality.APPLICATION_MODAL);
+            newWindow.show();
+            PhotoController c = (PhotoController) fxmlLoader.getController();
+            c.setAll(leLogement);
+        }catch(Exception e){
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
+
+    }
 }

@@ -5,6 +5,7 @@ module com.example.agenceimmo {
     requires jsch;
     requires commons.vfs2;
     requires jBCrypt;
+    requires org.apache.commons.net;
 
 
     opens com.example.agenceimmo to javafx.fxml;

@@ -1,11 +1,6 @@
 package com.example.agenceimmo;
 
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-
-import java.io.File;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -225,6 +220,6 @@ public class Gestion {
             e.printStackTrace();
             System.out.println(e.getMessage());
         }
-
+        this.setLesPhotos(lesPhotos);
     }
 }

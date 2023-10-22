@@ -1,6 +1,5 @@
 package com.example.agenceimmo;
 
-import com.jcraft.jsch.jce.SHA256;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,12 +11,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.io.IOException;
-import java.security.MessageDigest;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 
 
@@ -48,7 +47,6 @@ public class ConnexionController {
     }
 
     private void checkLogin() throws IOException {
-        Main m = new Main();
         String user = prompTextUsername.getText();
         String mdp = prompTextPassword.getText();
 
@@ -77,7 +75,6 @@ public class ConnexionController {
 
     @FXML
     protected void userLogIn() throws IOException {
-        Main m = new Main();
         String user = prompTextUsername.getText();
         String mdp = prompTextPassword.getText();
         try{

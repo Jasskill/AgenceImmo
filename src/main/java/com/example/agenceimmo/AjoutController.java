@@ -4,26 +4,26 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.apache.commons.net.ftp.FTP;
+import org.apache.commons.net.ftp.FTPClient;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URLConnection;
-import java.nio.file.FileSystem;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.UUID;
 
-
-import com.jcraft.jsch.*;
-import org.apache.commons.vfs2.*;
-import org.apache.commons.vfs2.provider.sftp.SftpFileSystemConfigBuilder;
 
 public class AjoutController {
     @FXML
@@ -49,8 +49,11 @@ public class AjoutController {
     private Button boutonAjouter;
     public int choixuti;
 
-    private Photo laPhotoLogement = null;
-    private File laFilePhoto = null;
+    private ArrayList<Photo> lesPhotosAEnvoyer = new ArrayList<Photo>();
+    private ArrayList<File> lesFilesAEnvoyer = new ArrayList<File>();
+
+    /*private Photo laPhotoLogement = null;
+    private File laFilePhoto = null;*/
 
 
     public void onAjoutPhotoclick() throws IOException {
@@ -66,13 +69,17 @@ public class AjoutController {
             String typeMime = URLConnection.guessContentTypeFromName(file.getName());
             laPhoto = new Photo(file.getName(), file.length(), typeMime);
             if(typeMime.equals("image/png") ||typeMime.equals("image/jpeg") || typeMime.equals("image/bmp")) {
-                msgajoutphoto.setText("Fichier sélectionné : " + file.getName());
+                if(msgajoutphoto.getText().equals("")){
+                    msgajoutphoto.setText("Fichier sélectionné : " + file.getName());
+                }else{
+                    msgajoutphoto.setText(msgajoutphoto.getText() + " ; " + file.getName());
+                }
+
                 msgajoutphoto.setVisible(true);
 
                 changerLien(laPhoto);
-                laPhotoLogement = laPhoto;
-                laFilePhoto = file;
-                //envoyerImage(file, laPhoto);
+                lesPhotosAEnvoyer.add(laPhoto);
+                lesFilesAEnvoyer.add(file);
             }else{
                 System.out.println("mauvais type de fichier");
             }
@@ -82,34 +89,28 @@ public class AjoutController {
             System.out.println("On va rien faire, comme tu veux !");
         }
     }
-
+//String uri = "sftp://agenceimmo:0550002D@172.19.0.44/var/www/html/uploads/" + file.getName();
     public void envoyerImage(File file, Photo laPhoto){
-        String fileAsString = file.toString();
-        System.out.println("On va uploader : " + laPhoto.getLien());
-        System.out.println("On va uploader : " + fileAsString);
-        FileSystemManager manager = null;
+        FTPClient ftpClient = new FTPClient();
         try {
-            manager = VFS.getManager();
+            System.out.println("CC");
+            ftpClient.connect("192.168.1.27", 21);
 
-            FileSystemOptions fsOptions = new FileSystemOptions();
-            SftpFileSystemConfigBuilder.getInstance().setStrictHostKeyChecking(fsOptions, "no");
-            SftpFileSystemConfigBuilder.getInstance().setUserDirIsRoot(fsOptions, false);
-            SftpFileSystemConfigBuilder.getInstance().setTimeout(fsOptions, 10000);
-            FileSystemManager fsManager = VFS.getManager();
-            // découpe du fichier
-
-            String uri = "sftp://agenceimmo:0550002D@172.19.0.44/var/www/html/uploads/" + file.getName();
-
-            FileObject fo = fsManager.resolveFile(uri, fsOptions);
-            FileObject local = manager.resolveFile(fileAsString);
-
-            fo.copyFrom(local, new AllFileSelector());
-
-            fo.close();
-            local.close();
-
-            envoyerImageBDD(file, laPhoto);
-
+            if(ftpClient.login("sio", "0550002D")){
+                ftpClient.enterLocalPassiveMode();
+                ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
+                laPhoto.setLien(UUID.randomUUID().toString());
+                String chemin = "./uploads/" + laPhoto.getLien();
+                InputStream inputStream = new FileInputStream(file);
+                if(ftpClient.storeFile(chemin, inputStream)){
+                    envoyerImageBDD(file, laPhoto);
+                }else{
+                    System.out.println("ça marche pas");
+                }
+                inputStream.close();
+            }else{
+                System.out.println("erreur d'authentification");
+            }
         } catch (Exception e) {
             // Erreur dans l'envoie du fichier
             System.out.println(e.getMessage());
@@ -122,14 +123,16 @@ public class AjoutController {
             Connection co = Connexion.getConnexion();
 
             String mimeType = URLConnection.guessContentTypeFromName(file.getName());
-            String requete = "INSERT INTO Photo (taille, type, lien) VALUES (?, ?, ?)";
+            String requete = "INSERT INTO Photo (taille, type, lien, idLogement) VALUES (?, ?, ?, ?)";
             PreparedStatement stmt = co.prepareStatement(requete);
             stmt.setLong(1, unePhoto.getSize());
             stmt.setString(2, mimeType);
             stmt.setString(3, unePhoto.getLien());
+            stmt.setInt(4, leLogement.getId());
             stmt.execute();
             stmt.close();
             co.close();
+
             // à finir
         } catch (SQLException e) {
             // Erreur dans la connexion ou dans la requête à la base de données
@@ -182,7 +185,7 @@ public class AjoutController {
         return ok;
     }
 
-    //private Logement leLogement;
+    private Logement leLogement;
     public void ajouterLogement(){
         if(!saisierue.getText().equals("") && !saisiecodepostal.getText().equals("") && !saisieville.getText().equals("")){
             if(toutesLesSurfaces != null && toutesLesTypesPieces != null && tousLesNomsEquipements != null){
@@ -190,22 +193,26 @@ public class AjoutController {
                 for(int i = 0; i<toutesLesSurfaces.size(); i++){
                     if(toutesLesSurfaces.get(i).getText().equals("") && toutesLesTypesPieces.get(i).getValue().equals("")){
                         okay = false;
+                        System.out.println("Les types de piece ou les surfaces ne sont pas bien remplies");
                     }
                     System.out.println(tousLesNomsEquipements.get(i).size());
                     for(TextField t : tousLesNomsEquipements.get(i)){
                         if(t.getText().equals("")){
                             okay = false;
+                            System.out.println("Les équipement ne sont pas bien remplies");
                         }
                     }
                 }
                 if(okay){
-                    Logement leLogement = creerLeLogement();
+                    leLogement = creerLeLogement();
                     envoyerLogementBDD(leLogement);
-                    if(laFilePhoto != null && laPhotoLogement != null){
-                        envoyerImage(laFilePhoto, laPhotoLogement);
-                        laFilePhoto = null;
-                        laPhotoLogement = null;
+                    for(int i=0;i<lesPhotosAEnvoyer.size();i++){
+                        if(lesFilesAEnvoyer.get(i) != null && lesPhotosAEnvoyer.get(i) != null){
+                            envoyerImage(lesFilesAEnvoyer.get(i), lesPhotosAEnvoyer.get(i));
+                        }
                     }
+                    lesPhotosAEnvoyer.clear();
+                    lesFilesAEnvoyer.clear();
                 }else{
                     Alert uneAlerte = new Alert(Alert.AlertType.ERROR);
                     uneAlerte.setContentText("Champs non remplies");
@@ -218,11 +225,9 @@ public class AjoutController {
             }
         }else{
             Alert uneAlerte = new Alert(Alert.AlertType.ERROR);
-            uneAlerte.setContentText("Champs non-remplies");
+            uneAlerte.setContentText("Champs non-remplie");
             uneAlerte.show();
         }
-
-
     }
 
     public void envoyerLogementBDD(Logement leLogement){
