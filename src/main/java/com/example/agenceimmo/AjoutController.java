@@ -90,13 +90,16 @@ public class AjoutController {
         }
     }
 //String uri = "sftp://agenceimmo:0550002D@172.19.0.44/var/www/html/uploads/" + file.getName();
+    private String serveur = "192.168.1.27"; // 172.19.0.44
+    private String user = "sio"; // agenceimmo
+    private String mdp = "0550002D"; // 0550002D
+
     public void envoyerImage(File file, Photo laPhoto){
         FTPClient ftpClient = new FTPClient();
         try {
-            System.out.println("CC");
-            ftpClient.connect("192.168.1.27", 21);
+            ftpClient.connect(serveur, 21);
 
-            if(ftpClient.login("sio", "0550002D")){
+            if(ftpClient.login(user, mdp)){
                 ftpClient.enterLocalPassiveMode();
                 ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
                 laPhoto.setLien(UUID.randomUUID().toString());

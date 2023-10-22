@@ -2,6 +2,9 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+!**/commons-net-3.10.0-bin.zip
+!**/jBCrypt-0.4.3.jar
+!**mysql-connector-java-8.0.27.jar
 
 ### IntelliJ IDEA ###
 .idea/modules.xml
