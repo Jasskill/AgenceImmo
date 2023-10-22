@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="316.0" prefWidth="600.0" style="-fx-background-color: #DDD0C8; -fx-background-position: center;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.agenceimmo.VisualiserController">
+   <children>
+      <Label layoutX="38.0" layoutY="33.0" text="Les Pieces :" />
+      <Label layoutX="338.0" layoutY="25.0" text="Les Equipements :" />
+      <Button layoutX="234.0" layoutY="274.0" mnemonicParsing="false" text="Voir les Images Pieces" />
+      <TableView fx:id="lesPieces" layoutX="38.0" layoutY="55.0" prefHeight="200.0" prefWidth="254.0">
+        <columns>
+          <TableColumn fx:id="pieceNom" prefWidth="112.0" text="Nom" />
+          <TableColumn fx:id="pieceSurface" prefWidth="141.0" text="Surface" />
+        </columns>
+      </TableView>
+      <TableView fx:id="lesEquipements" layoutX="338.0" layoutY="55.0" prefHeight="200.0" prefWidth="200.0">
+        <columns>
+          <TableColumn fx:id="equipementNom" prefWidth="199.0" text="Nom" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>

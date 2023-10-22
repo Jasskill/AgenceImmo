@@ -7,9 +7,6 @@ public class Photo {
     private String lien;
     private long size;
     private String type;
-
-    private ImageView contenu;
-
     private Logement leLogement;
 
     private Piece laPiece;
@@ -76,13 +73,5 @@ public class Photo {
 
     public void setlEquipement(Equipement lEquipement) {
         this.lEquipement = lEquipement;
-    }
-
-    public ImageView getContenu() {
-        return contenu;
-    }
-
-    public void setContenu(ImageView contenu) {
-        this.contenu = contenu;
     }
 }

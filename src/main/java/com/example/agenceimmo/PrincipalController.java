@@ -62,7 +62,6 @@ public class PrincipalController {
 
 
     public void initialize() {
-        //colonneImage.setCellValueFactory(new PropertyValueFactory<Photo, ImageView>("contenu"));
         colonneCodePostal.setCellValueFactory(new PropertyValueFactory<Logement, String>("codePostale"));
         colonneVille.setCellValueFactory(new PropertyValueFactory<Logement, String>("ville"));
         colonneRue.setCellValueFactory(new PropertyValueFactory<Logement, String>("rue"));
@@ -97,6 +96,25 @@ public class PrincipalController {
         // Specifies the modality for new window.
         newWindow.initModality(Modality.APPLICATION_MODAL);
         newWindow.show();
+    }
+
+    @FXML
+    protected void onBoutonVisualiserClick() throws IOException {
+        if(!tableLogements.getSelectionModel().isEmpty()){
+            Stage newWindow = new Stage();
+            FXMLLoader fxmlLoader = new FXMLLoader(AgenceImmo.class.getResource("visualiser.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), 640, 320);
+            newWindow.setScene(scene);
+            // Specifies the modality for new window.
+            newWindow.initModality(Modality.APPLICATION_MODAL);
+            newWindow.show();
+            VisualiserController controller = (VisualiserController) fxmlLoader.getController();
+            System.out.println("AAAA : " + tableLogements.getSelectionModel().getSelectedItem().getId());
+            controller.setAll(tableLogements.getSelectionModel().getSelectedItem());
+        }else{
+            System.out.println("ECHEC AHAHAHAHA : ");
+        }
+
     }
 
     @FXML

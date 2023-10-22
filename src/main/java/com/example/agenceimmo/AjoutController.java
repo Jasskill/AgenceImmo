@@ -1,5 +1,7 @@
 package com.example.agenceimmo;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -47,11 +49,8 @@ public class AjoutController {
     private Button boutonAjouter;
     public int choixuti;
 
-    private Photo laPhotoLogement;
-    private File laFilePhoto;
-
-
-
+    private Photo laPhotoLogement = null;
+    private File laFilePhoto = null;
 
 
     public void onAjoutPhotoclick() throws IOException {
@@ -185,8 +184,45 @@ public class AjoutController {
 
     //private Logement leLogement;
     public void ajouterLogement(){
-        Logement leLogement = creerLeLogement();
-        envoyerLogementBDD(leLogement);
+        if(!saisierue.getText().equals("") && !saisiecodepostal.getText().equals("") && !saisieville.getText().equals("")){
+            if(toutesLesSurfaces != null && toutesLesTypesPieces != null && tousLesNomsEquipements != null){
+                boolean okay = true;
+                for(int i = 0; i<toutesLesSurfaces.size(); i++){
+                    if(toutesLesSurfaces.get(i).getText().equals("") && toutesLesTypesPieces.get(i).getValue().equals("")){
+                        okay = false;
+                    }
+                    System.out.println(tousLesNomsEquipements.get(i).size());
+                    for(TextField t : tousLesNomsEquipements.get(i)){
+                        if(t.getText().equals("")){
+                            okay = false;
+                        }
+                    }
+                }
+                if(okay){
+                    Logement leLogement = creerLeLogement();
+                    envoyerLogementBDD(leLogement);
+                    if(laFilePhoto != null && laPhotoLogement != null){
+                        envoyerImage(laFilePhoto, laPhotoLogement);
+                        laFilePhoto = null;
+                        laPhotoLogement = null;
+                    }
+                }else{
+                    Alert uneAlerte = new Alert(Alert.AlertType.ERROR);
+                    uneAlerte.setContentText("Champs non remplies");
+                    uneAlerte.show();
+                }
+            }else{
+                Alert uneAlerte = new Alert(Alert.AlertType.ERROR);
+                uneAlerte.setContentText("Une pièce au moins nécessaire");
+                uneAlerte.show();
+            }
+        }else{
+            Alert uneAlerte = new Alert(Alert.AlertType.ERROR);
+            uneAlerte.setContentText("Champs non-remplies");
+            uneAlerte.show();
+        }
+
+
     }
 
     public void envoyerLogementBDD(Logement leLogement){
@@ -234,24 +270,12 @@ public class AjoutController {
                     unEquipement.toString();
                 }
             }
-
             stmt.close();
             co.close();
         }catch(SQLException e){
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
-        try{
-            Connection co = Connexion.getConnexion();
-
-            co.close();
-        }catch(SQLException e){
-            System.out.println(e.getMessage());
-            e.printStackTrace();
-        }
-
-
-
     }
 
     public Logement creerLeLogement(){
@@ -308,13 +332,22 @@ public class AjoutController {
 
             Label labelSurfacePiece = new Label("SURFACE DE LA PIECE : " + i);
             TextField surfacePiece = new TextField();
+            surfacePiece.textProperty().addListener(new ChangeListener<String>() {
+                @Override
+                public void changed(ObservableValue<? extends String> observable, String oldValue,
+                                    String newValue) {
+                    if (!newValue.matches("[0-9.]")) {
+                        surfacePiece.setText(newValue.replaceAll("[^0-9.]", ""));
+                    }
+                }
+            });
             toutesLesSurfaces.add(surfacePiece);
 
             //Label labelEquipementPiece = new Label("EQUIPEMENT DE LA PIECE : " + i);
             //TextField equipementPiece = new TextField();
 
             Label labelNbEquipement = new Label("Sélectionner nombre équipement de la pièce");
-            ObservableList<Integer> equipementOptions = FXCollections.observableArrayList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+            ObservableList<Integer> equipementOptions = FXCollections.observableArrayList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
             ComboBox<Integer> selectnbequipements = new ComboBox<>(equipementOptions);
 
             // Ajoutez tous les éléments de la pièce au conteneur de la pièce

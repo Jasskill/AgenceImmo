@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Piece {
     private int id;
-    private int surface;
+    private long surface;
 
     private String type;
 
@@ -24,10 +24,10 @@ public class Piece {
     }
 
 
-    public int getSurface() {
+    public long getSurface() {
         return this.surface;
     }
-    public void setSurface(int surface) {
+    public void setSurface(long surface) {
         this.surface = surface;
     }
 

@@ -43,7 +43,10 @@
       <TextArea fx:id="saisiedescription" layoutX="22.0" layoutY="152.0" prefHeight="73.0" prefWidth="469.0" />
 
       <!-- Ajout  d'une photo -->
-      <Label layoutX="26.0" layoutY="238.0" prefHeight="17.0" prefWidth="139.0" text="AJOUTEZ UNE PHOTO" />
+      <Label layoutX="26.0" layoutY="238.0" prefHeight="17.0" prefWidth="139.0" text="AJOUTEZ UNE PHOTO">
+         <font>
+            <Font name="JetBrains Mono Regular" size="12.0" />
+         </font></Label>
       <Button fx:id="ajoutphoto" layoutX="22.0" layoutY="258.0" mnemonicParsing="false" onAction="#onAjoutPhotoclick" prefHeight="30.0" prefWidth="158.0" style="-fx-background-color: #323232; -fx-border-color: #323232;" text="Choisir une image..." textFill="#ddd0c8">
          <font>
             <Font name="Georgia" size="15.0" />
@@ -81,7 +84,7 @@
       <ScrollPane layoutX="42.0" layoutY="395.0" prefHeight="261.0" prefWidth="517.0">
       <VBox fx:id="piecesContainer" spacing="10" />
       </ScrollPane>
-      <Button fx:id="boutonAjouter" onAction="#ajouterLogement" layoutX="258.0" layoutY="663.0" mnemonicParsing="false" style="-fx-background-color: #323232; -fx-border-color: #323232;" text="Ajouter !" textFill="#ddd0c8" textOverrun="CENTER_ELLIPSIS">
+      <Button fx:id="boutonAjouter" layoutX="258.0" layoutY="663.0" mnemonicParsing="false" onAction="#ajouterLogement" style="-fx-background-color: #323232; -fx-border-color: #323232;" text="Ajouter !" textFill="#ddd0c8" textOverrun="CENTER_ELLIPSIS">
          <font>
             <Font size="14.0" />
          </font>
