@@ -27,41 +27,30 @@ import java.util.ResourceBundle;
 
 public class PrincipalController {
     @FXML
-    private Label labelUtilisateur;
-
-    @FXML
     private Button boutonAjouter;
     @FXML
     private Button boutonDeco;
-
     @FXML
     private ImageView uneImage;
-
     @FXML
     private TableView<Logement> tableLogements;
-
     @FXML
     private TableColumn<Photo, ImageView> colonneImage;
-
     @FXML
     private TableColumn<Logement, String> colonneCodePostal;
-
     @FXML
     private TableColumn<Logement, String> colonneVille;
-
     @FXML
     private TableColumn<Logement, String> colonneRue;
-
     @FXML
     private TableColumn<Logement, Integer> colonnePieces;
-
+    @FXML
+    private Label labelUtilisateur;
     public ObservableList<Logement> list = FXCollections.observableArrayList();
 
     public Gestion g = new Gestion();
-
-
-
     public void initialize() {
+
         colonneCodePostal.setCellValueFactory(new PropertyValueFactory<Logement, String>("codePostale"));
         colonneVille.setCellValueFactory(new PropertyValueFactory<Logement, String>("ville"));
         colonneRue.setCellValueFactory(new PropertyValueFactory<Logement, String>("rue"));
@@ -74,10 +63,6 @@ public class PrincipalController {
             throw new RuntimeException(e);
         }
         tableLogements.setItems(list);
-
-        // An image file on the hard drive.
-
-
     }
 
     @FXML
@@ -109,7 +94,10 @@ public class PrincipalController {
 
     @FXML
     protected void onBoutonDecoClick() throws IOException {
-        //Ferme la page principal
+        Scene SceneActuel = boutonDeco.getScene();
+        //Conversion obligatoire afin d'acceder à close
+        Stage PrincipalStage = (Stage) SceneActuel.getWindow();
+        PrincipalStage.close();
     }
 
 

@@ -22,16 +22,6 @@ import java.sql.ResultSet;
 
 public class ConnexionController {
     @FXML
-    private Label welcomeText;
-    @FXML
-    private Label labelAngece;
-    @FXML
-    private Label labeImmo;
-    @FXML
-    private Label labelUsername;
-    @FXML
-    private Label labelPassword;
-    @FXML
     private TextField prompTextUsername;
     @FXML
     private TextField prompTextPassword;
@@ -83,14 +73,6 @@ public class ConnexionController {
             PreparedStatement stmtSelect = coBaseImmobilier.prepareStatement(requete);
             stmtSelect.setString(1, user);
             ResultSet res = stmtSelect.executeQuery();
-
-            /*
-            Test hash avec SHA-256
-            MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
-            byte[] data = user.getBytes();
-            byte[] hashData = messageDigest.digest(data);
-            */
-
             while (res.next()){
                 boolean verif = BCrypt.checkpw(mdp, res.getString("utilisateur.mdp"));
                 if (verif){
@@ -114,13 +96,5 @@ public class ConnexionController {
             e.printStackTrace();
             System.out.println(e.getMessage());
         }
-
-
-
-
-
-
-
-
-}
+    }
 }
