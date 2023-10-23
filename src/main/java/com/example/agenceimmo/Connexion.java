@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 public class Connexion {
-    private static String URL = "jdbc:mysql://localhost/Immobilier" ;//"jdbc:mysql://172.19.0.44:3306/Immobilier" ;
+    private static String URL = "jdbc:mysql://localhost/immobilier" ;//"jdbc:mysql://172.19.0.44:3306/Immobilier" ;
     private static String LOGIN = "root";//"agentimmobilier";
     private static String MDP = "";//"0550002D";
 

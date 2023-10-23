@@ -90,7 +90,7 @@ public class Piece {
     }
 
     public String toString(){
-        System.out.println("Piece : " + this.getId() + " ; " + this.getSurface() + " ; " + this.getType() + " ; " + this.getLeLogement().getId());
+
         return null;
     }
 }

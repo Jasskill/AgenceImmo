@@ -109,10 +109,7 @@ public class PrincipalController {
             newWindow.initModality(Modality.APPLICATION_MODAL);
             newWindow.show();
             VisualiserController controller = (VisualiserController) fxmlLoader.getController();
-            System.out.println("AAAA : " + tableLogements.getSelectionModel().getSelectedItem().getId());
             controller.setAll(tableLogements.getSelectionModel().getSelectedItem());
-        }else{
-            System.out.println("ECHEC AHAHAHAHA : ");
         }
 
     }

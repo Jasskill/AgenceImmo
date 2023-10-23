@@ -11,20 +11,12 @@ public class Gestion {
     private ArrayList<Equipement> lesEquipement = new ArrayList<Equipement>();
     private ArrayList<Photo> lesPhotos = new ArrayList<Photo>();
 
-
-
     public Gestion(){
         this.recupererLogements();
         this.recupererPieces();
         this.recupererEquipement();
         this.recupererPhotos();
-        System.out.println("Le nombre de Logements : " + this.getLesLogements().size());
-        System.out.println("Le nombre de Pieces : " + this.getLesPieces().size());
-        System.out.println("Le nombre de Equipements : " + this.getLesEquipement().size());
-        System.out.println("Le nombre de Photos : " + this.getLesPhotos().size());
     }
-
-
 
     public ArrayList<Logement> getLesLogements() {
         return lesLogements;

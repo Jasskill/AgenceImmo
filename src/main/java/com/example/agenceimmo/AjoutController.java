@@ -80,13 +80,10 @@ public class AjoutController {
                 changerLien(laPhoto);
                 lesPhotosAEnvoyer.add(laPhoto);
                 lesFilesAEnvoyer.add(file);
-            }else{
-                System.out.println("mauvais type de fichier");
             }
 
         } else {
             msgajoutphoto.setVisible(false);
-            System.out.println("On va rien faire, comme tu veux !");
         }
     }
 //String uri = "sftp://agenceimmo:0550002D@172.19.0.44/var/www/html/uploads/" + file.getName();
@@ -107,16 +104,11 @@ public class AjoutController {
                 InputStream inputStream = new FileInputStream(file);
                 if(ftpClient.storeFile(chemin, inputStream)){
                     envoyerImageBDD(file, laPhoto);
-                }else{
-                    System.out.println("ça marche pas");
                 }
                 inputStream.close();
-            }else{
-                System.out.println("erreur d'authentification");
             }
         } catch (Exception e) {
             // Erreur dans l'envoie du fichier
-            System.out.println(e.getMessage());
             e.printStackTrace();
         }
     }
@@ -139,7 +131,6 @@ public class AjoutController {
             // à finir
         } catch (SQLException e) {
             // Erreur dans la connexion ou dans la requête à la base de données
-            System.out.println(e.getMessage());
             e.printStackTrace();
         }
     }
@@ -158,7 +149,6 @@ public class AjoutController {
             stmtSelect.close();
             co.close();
         }catch(SQLException e){
-            System.out.println(e.getMessage());
             e.printStackTrace();
         }
         int i = 0;
@@ -182,7 +172,6 @@ public class AjoutController {
             stmtSelect.close();
             co.close();
         }catch(SQLException e){
-            System.out.println(e.getMessage());
             e.printStackTrace();
         }
         return ok;
@@ -196,13 +185,10 @@ public class AjoutController {
                 for(int i = 0; i<toutesLesSurfaces.size(); i++){
                     if(toutesLesSurfaces.get(i).getText().equals("") && toutesLesTypesPieces.get(i).getValue().equals("")){
                         okay = false;
-                        System.out.println("Les types de piece ou les surfaces ne sont pas bien remplies");
                     }
-                    System.out.println(tousLesNomsEquipements.get(i).size());
                     for(TextField t : tousLesNomsEquipements.get(i)){
                         if(t.getText().equals("")){
                             okay = false;
-                            System.out.println("Les équipement ne sont pas bien remplies");
                         }
                     }
                 }
@@ -249,8 +235,7 @@ public class AjoutController {
             res.next();
             int id = res.getInt("i");
             leLogement.setId(id);
-            System.out.println("\n\n");
-            System.out.println(leLogement.toString());
+
 
             for(Piece unePiece : leLogement.getLesPieces()){
                 stmt = co.prepareStatement("INSERT INTO Piece(surface, type, idLogement) VALUES (?,?,?)");
@@ -281,7 +266,6 @@ public class AjoutController {
             stmt.close();
             co.close();
         }catch(SQLException e){
-            System.out.println(e.getMessage());
             e.printStackTrace();
         }
     }
@@ -306,7 +290,6 @@ public class AjoutController {
             lesPieces.add(unePiece);
         }
         leLogement.setLesPieces(lesPieces);
-        System.out.println(leLogement.toString());
         return leLogement;
     }
 
@@ -368,7 +351,6 @@ public class AjoutController {
                 pieceContainer.getChildren().clear();
                 VBox equipementContainer = new VBox();
                 choixuti = newValue;
-                System.out.println("Nouvelle valeur de choixuti : " + choixuti);
                 for (int j = 1; j <= choixuti; j++) {
                     Label labelNomEquip = new Label("NOM DE L'EQUIPEMENT n° " + j + " DE LA PIECE : " + finalI);
                     TextField nomEquip = new TextField();
