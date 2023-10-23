@@ -22,11 +22,8 @@ public class VisualiserController {
     private TableView<Equipement> lesEquipements;
     @FXML
     private TableColumn<Equipement, String> equipementNom;
-
     private Logement leLogement;
-
     private Gestion g = new Gestion();
-
     public void setAll(Logement unLogement){
         this.leLogement = unLogement;
 
@@ -43,7 +40,6 @@ public class VisualiserController {
             throw new RuntimeException(e);
         }
         lesPieces.setItems(list);
-
         equipementNom.setCellValueFactory(new PropertyValueFactory<Equipement, String>("libelle"));
         ObservableList<Equipement> listE = FXCollections.observableArrayList();
         try {
@@ -57,7 +53,6 @@ public class VisualiserController {
         }
         lesEquipements.setItems(listE);
     }
-
     public void voirLesImages(){
         try{
             Stage newWindow = new Stage();
@@ -72,6 +67,5 @@ public class VisualiserController {
         }catch(Exception e){
             e.printStackTrace();
         }
-
     }
 }

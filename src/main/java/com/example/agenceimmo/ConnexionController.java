@@ -1,5 +1,4 @@
 package com.example.agenceimmo;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,14 +11,10 @@ import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.mindrot.jbcrypt.BCrypt;
-
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-
-
-
 public class ConnexionController {
     @FXML
     private TextField prompTextUsername;
