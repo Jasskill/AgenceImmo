@@ -14,6 +14,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.fxml.FXMLLoader;
 
 import java.io.File;
 import java.io.IOException;
@@ -46,11 +47,12 @@ public class PrincipalController {
     private TableColumn<Logement, Integer> colonnePieces;
     @FXML
     private Label labelUtilisateur;
-    public ObservableList<Logement> list = FXCollections.observableArrayList();
 
+    public ObservableList<Logement> list = FXCollections.observableArrayList();
+    private String UtilisateurCo;
     public Gestion g = new Gestion();
     public void initialize() {
-
+        labelUtilisateur.setText("Utilisateur connecté : " + UtilisateurCo);
         colonneCodePostal.setCellValueFactory(new PropertyValueFactory<Logement, String>("codePostale"));
         colonneVille.setCellValueFactory(new PropertyValueFactory<Logement, String>("ville"));
         colonneRue.setCellValueFactory(new PropertyValueFactory<Logement, String>("rue"));

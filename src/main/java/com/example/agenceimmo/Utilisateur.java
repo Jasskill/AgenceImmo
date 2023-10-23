@@ -61,10 +61,4 @@ public class Utilisateur {
         this.mail = unMail;
 
     }
-
-
-    /*public ConnexionUtilisateur(int id, String mdp){
-
-    }
-     */
 }

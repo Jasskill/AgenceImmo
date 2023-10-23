@@ -29,40 +29,7 @@ public class ConnexionController {
     private Button ButtonLogin;
     @FXML
     private Label labelErreur;
-
-
-    @FXML
-    public void connexUser(ActionEvent e)throws IOException{
-        checkLogin();
-    }
-
-    private void checkLogin() throws IOException {
-        String user = prompTextUsername.getText();
-        String mdp = prompTextPassword.getText();
-
-        /*if (prompTextUsername.getText().toString().equals("javacoding") && prompTextPasword.getText().toString().equals("mdp")){
-            wrongLogin
-        }
-
-         */
-        //methode d'essaie à supprimer quand userLogin sera fonctionnel
-        if ("admin".equals(mdp)){
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("principal.fxml"));
-            Parent root = loader.load();
-            Stage stage = (Stage) ButtonLogin.getScene().getWindow();
-            Scene scene = new Scene(root);
-        }else{
-            //Bdd bdd = new Bdd;
-
-        }
-
-    }
-
-
-    private boolean bonIdentifiaction(String user,String mdp){
-        return "admin".equals(user) && "password".equals(mdp);
-    }
-
+    private String UtilisateurCo;
     @FXML
     protected void userLogIn() throws IOException {
         String user = prompTextUsername.getText();
@@ -76,6 +43,7 @@ public class ConnexionController {
             while (res.next()){
                 boolean verif = BCrypt.checkpw(mdp, res.getString("utilisateur.mdp"));
                 if (verif){
+                    UtilisateurCo = user;
                     Stage newWindow = new Stage();
                     FXMLLoader fxmlLoader = new FXMLLoader(AgenceImmo.class.getResource("principal.fxml"));
                     Scene scene = new Scene(fxmlLoader.load(), 1280, 720);
