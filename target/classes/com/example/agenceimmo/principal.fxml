@@ -19,5 +19,6 @@
       </TableView>
       <ImageView fx:id="uneImage" fitHeight="63.0" fitWidth="161.0" layoutX="857.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true" />
       <Button fx:id="" layoutX="167.0" layoutY="10.0" mnemonicParsing="false" onAction="#onBoutonVisualiserClick" prefHeight="33.0" prefWidth="138.0" style="-fx-background-color: #323232;" text="Visualiser" textFill="#dbcfc8" />
+      <Button fx:id="boutonActualiser" onAction="#onBoutonActualiserClick" layoutX="320.0" layoutY="10.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="138.0" style="-fx-background-color: #323232;" text="Actualiser" textFill="#ddd0c8" />
    </children>
 </AnchorPane>

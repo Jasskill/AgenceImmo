@@ -2,6 +2,7 @@ package com.example.agenceimmo;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -19,14 +20,13 @@ import javafx.fxml.FXMLLoader;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class PrincipalController {
+    @FXML
+    public Button boutonActualiser;
     @FXML
     private Button boutonAjouter;
     @FXML
@@ -96,7 +96,6 @@ public class PrincipalController {
         }
 
     }
-
     @FXML
     protected void onBoutonDecoClick() throws IOException {
         Scene SceneActuel = boutonDeco.getScene();
@@ -104,8 +103,11 @@ public class PrincipalController {
         Stage PrincipalStage = (Stage) SceneActuel.getWindow();
         PrincipalStage.close();
     }
-
-
-
-
+    public void onBoutonActualiserClick(ActionEvent Event) throws IOException {
+        g.recupererLogements();
+        ObservableList<Logement> meslogements = tableLogements.getItems();
+        meslogements.clear();
+        meslogements.addAll(g.getLesLogements());
+        tableLogements.refresh();
+    }
 }
