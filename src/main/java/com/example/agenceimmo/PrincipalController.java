@@ -76,14 +76,7 @@ public class PrincipalController {
         tableLogements.setItems(list);
 
         // An image file on the hard drive.
-        try{
-            File file = new File("./image/logement_test.jpg");
-            String localUrl = file.toURI().toURL().toString();
-            Image image = new Image(localUrl);
-            uneImage.setImage(image);
-        }catch(Exception e){
-            e.printStackTrace();
-        }
+
 
     }
 

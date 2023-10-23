@@ -11,7 +11,7 @@
       <TableView fx:id="lesPieces" layoutX="38.0" layoutY="55.0" prefHeight="200.0" prefWidth="254.0">
         <columns>
           <TableColumn fx:id="pieceNom" prefWidth="112.0" text="Nom" />
-          <TableColumn fx:id="pieceSurface" prefWidth="141.0" text="Surface" />
+          <TableColumn fx:id="pieceSurface" prefWidth="141.0" text="Surface (m²)" />
         </columns>
       </TableView>
       <TableView fx:id="lesEquipements" layoutX="338.0" layoutY="55.0" prefHeight="200.0" prefWidth="200.0">
