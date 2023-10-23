@@ -48,9 +48,10 @@ public class ConnexionController {
                     FXMLLoader fxmlLoader = new FXMLLoader(AgenceImmo.class.getResource("principal.fxml"));
                     Scene scene = new Scene(fxmlLoader.load(), 1280, 720);
                     newWindow.setScene(scene);
-                    // Specifies the modality for new window.
                     newWindow.initModality(Modality.APPLICATION_MODAL);
                     newWindow.show();
+                    PrincipalController principalController = fxmlLoader.getController();
+                    principalController.setUtilisateurCo(UtilisateurCo);
                 }else {
                     Alert uneAlerte = new Alert(Alert.AlertType.ERROR);
                     uneAlerte.setContentText("Login ou mot de passe incorrect");

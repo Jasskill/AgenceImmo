@@ -7,14 +7,14 @@
    <children>
       <Label layoutX="38.0" layoutY="33.0" text="Les Pieces :" />
       <Label layoutX="338.0" layoutY="25.0" text="Les Equipements :" />
-      <Button onAction="#voirLesImages" layoutX="234.0" layoutY="274.0" mnemonicParsing="false" text="Voir les Images Pieces" />
-      <TableView fx:id="lesPieces" layoutX="38.0" layoutY="55.0" prefHeight="200.0" prefWidth="254.0">
+      <Button layoutX="234.0" layoutY="274.0" mnemonicParsing="false" onAction="#voirLesImages" style="-fx-background-color: #323232;" text="Voir les Images Pieces" textFill="#ddd0c8" />
+      <TableView fx:id="lesPieces" layoutX="38.0" layoutY="55.0" prefHeight="200.0" prefWidth="254.0" style="-fx-background-color: #323232;">
         <columns>
           <TableColumn fx:id="pieceNom" prefWidth="112.0" text="Nom" />
           <TableColumn fx:id="pieceSurface" prefWidth="141.0" text="Surface (m²)" />
         </columns>
       </TableView>
-      <TableView fx:id="lesEquipements" layoutX="338.0" layoutY="55.0" prefHeight="200.0" prefWidth="200.0">
+      <TableView fx:id="lesEquipements" layoutX="338.0" layoutY="55.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #323232;">
         <columns>
           <TableColumn fx:id="equipementNom" prefWidth="199.0" text="Nom" />
         </columns>

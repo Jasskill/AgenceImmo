@@ -51,8 +51,11 @@ public class PrincipalController {
     public ObservableList<Logement> list = FXCollections.observableArrayList();
     private String UtilisateurCo;
     public Gestion g = new Gestion();
-    public void initialize() {
+    public void setUtilisateurCo(String UtilisateurCo) {
+        this.UtilisateurCo = UtilisateurCo;
         labelUtilisateur.setText("Utilisateur connecté : " + UtilisateurCo);
+    }
+    public void initialize() {
         colonneCodePostal.setCellValueFactory(new PropertyValueFactory<Logement, String>("codePostale"));
         colonneVille.setCellValueFactory(new PropertyValueFactory<Logement, String>("ville"));
         colonneRue.setCellValueFactory(new PropertyValueFactory<Logement, String>("rue"));
